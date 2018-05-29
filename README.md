@@ -10,19 +10,19 @@ var line = d3.line()
     .y(function(d) { return y(d.value); });
 ```
 
-This line generator can then be used to compute the `d` attribute of an SVG path element:
+线条生成器可以计算 SVG path 元素的 `d` 属性：
 
 ```js
 path.datum(data).attr("d", line);
 ```
 
-Or you can use it to render to a Canvas 2D context:
+或者也可以将其渲染到 Canvas 2D 上下文中:
 
 ```js
 line.context(context)(data);
 ```
 
-For more, read [Introducing d3-shape](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12).
+更多信息参考 [Introducing d3-shape](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12).
 
 ## Installing
 
