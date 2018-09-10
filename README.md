@@ -10,23 +10,23 @@ var line = d3.line()
     .y(function(d) { return y(d.value); });
 ```
 
-This line generator can then be used to compute the `d` attribute of an SVG path element:
+线条生成器可以用来计算 `SVG` `path` 元素的 `d` 属性:
 
 ```js
 path.datum(data).attr("d", line);
 ```
 
-Or you can use it to render to a Canvas 2D context:
+也可以将其渲染到 `Canvas 2D` 上下文中:
 
 ```js
 line.context(context)(data);
 ```
 
-For more, read [Introducing d3-shape](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12).
+更多信息参考 [Introducing d3-shape](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12).
 
 ## Installing
 
-If you use NPM, `npm install d3-shape`. Otherwise, download the [latest release](https://github.com/d3/d3-shape/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-shape.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+`NPM` 安装: `npm install d3-shape`. 也可以下载 [latest release](https://github.com/d3/d3-shape/releases/latest). 此外还可以从 [d3js.org](https://d3js.org) 以 [standalone library](https://d3js.org/d3-shape.v1.min.js) 或作为 [D3 4.0](https://github.com/d3/d3) 的一部分载入. 支持 `AMD`, `CommonJS` 以及基本的标签引入形式，如果使用标签引入则会暴露全局 `d3` 变量:
 
 ```html
 <script src="https://d3js.org/d3-path.v1.min.js"></script>
@@ -38,7 +38,7 @@ var line = d3.line();
 </script>
 ```
 
-[Try d3-shape in your browser.](https://tonicdev.com/npm/d3-shape)
+[在浏览器中测试 `d3-shape`.](https://tonicdev.com/npm/d3-shape)
 
 ## API Reference
 
