@@ -2,7 +2,7 @@
 
 可视化通常由离散图形标记组成, 比如 [symbols](#symbols), [arcs](#arcs), [lines](#lines) 和 [areas](#areas)。虽然条形的矩形可以很容易的使用 [SVG](http://www.w3.org/TR/SVG/paths.html#PathData) 或者 [Canvas](http://www.w3.org/TR/2dcontext/#canvaspathmethods) 来生成, 但是其他的比如圆形的扇形以及向心 `Catmull-Rom` 样条曲线就很复杂。这个模块提供了许多图形生成器以便使用。
 
-与 `D3` 的其他特性一样，这些图形也是又数据驱动的: 每个图形生成器都暴露了一个如何将数据映射到可视化表现的访问器。例如你可以通过 [scaling](https://github.com/d3/d3-scale) 定义一个时间序列的线条生成器以生成图表:
+与 `D3` 的其他特性一样，这些图形也是又数据驱动的: 每个图形生成器都暴露了一个如何将数据映射到可视化表现的访问器。例如你可以通过 [scaling](https://github.com/xswei/d3-scale) 定义一个时间序列的线条生成器以生成图表:
 
 ```js
 var line = d3.line()
@@ -26,7 +26,7 @@ line.context(context)(data);
 
 ## Installing
 
-`NPM` 安装: `npm install d3-shape`. 也可以下载 [latest release](https://github.com/d3/d3-shape/releases/latest). 此外还可以从 [d3js.org](https://d3js.org) 以 [standalone library](https://d3js.org/d3-shape.v1.min.js) 或作为 [D3 4.0](https://github.com/d3/d3) 的一部分载入. 支持 `AMD`, `CommonJS` 以及基本的标签引入形式，如果使用标签引入则会暴露全局 `d3` 变量:
+`NPM` 安装: `npm install d3-shape`. 也可以下载 [latest release](https://github.com/xswei/d3-shape/releases/latest). 此外还可以从 [d3js.org](https://d3js.org) 以 [standalone library](https://d3js.org/d3-shape.v1.min.js) 或作为 [D3 4.0](https://github.com/xswei/d3) 的一部分载入. 支持 `AMD`, `CommonJS` 以及基本的标签引入形式，如果使用标签引入则会暴露全局 `d3` 变量:
 
 ```html
 <script src="https://d3js.org/d3-path.v1.min.js"></script>
@@ -61,11 +61,11 @@ var line = d3.line();
 
 可以与 [pie generator](#pies) 对比，`pie` 生成器用来计算一组数据作为饼图或圆环图时所需要的角度信息；这些角度信息会被传递给 `arc` 生成器生成图形。
 
-<a name="arc" href="#arc">#</a> d3.<b>arc</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js "Source")
+<a name="arc" href="#arc">#</a> d3.<b>arc</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js "Source")
 
 使用默认的设置创建一个新的 `arc` 生成器。
 
-<a name="_arc" href="#_arc">#</a> <i>arc</i>(<i>arguments…</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L89 "Source")
+<a name="_arc" href="#_arc">#</a> <i>arc</i>(<i>arguments…</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L89 "Source")
 
 根据指定的 *arguments* 生成 `arc`。*arguments* 是任意的; 它们只是简单地传递到 `arc` 生成器的访问器函数的对象。例如，根据默认的设置，传入的对象应该包含以下半径和角度信息:
 
@@ -94,17 +94,17 @@ arc(); // "M0,-100A100,100,0,0,1,100,0L0,0Z"
 
 如果 `arc` 生成器拥有 [context](#arc_context) 则这个弧会被作为 [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) 的调用序列渲染到对应的上下文中并返回空。否则，返回一个 [path data](http://www.w3.org/TR/SVG/paths.html#PathData) 字符串。
 
-<a name="arc_centroid" href="#arc_centroid">#</a> <i>arc</i>.<b>centroid</b>(<i>arguments…</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L224 "Source")
+<a name="arc_centroid" href="#arc_centroid">#</a> <i>arc</i>.<b>centroid</b>(<i>arguments…</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L224 "Source")
 
-Computes the midpoint [*x*, *y*] of the center line of the arc that would be [generated](#_arc) by the given *arguments*. The *arguments* are arbitrary; they are simply propagated to the arc generator’s accessor functions along with the `this` object. To be consistent with the generated arc, the accessors must be deterministic, *i.e.*, return the same value given the same arguments. The midpoint is defined as ([startAngle](#arc_startAngle) + [endAngle](#arc_endAngle)) / 2 and ([innerRadius](#arc_innerRadius) + [outerRadius](#arc_outerRadius)) / 2. For example:
+计算由给定 *arguments* 生成的 [generated](#_arc )的中间点 [*x*, *y*]. *arguments* 是任意的，它们会被传递给 `arc` 生成器的访问器。为了与生成的弧保持一致，访问器必须是确定的。例如，相同的参数返回相同的值。中间点被定义为 ([startAngle](#arc_startAngle) + [endAngle](#arc_endAngle)) / 2 和 ([innerRadius](#arc_innerRadius) + [outerRadius](#arc_outerRadius)) / 2。例如:
 
 [<img alt="Circular Sector Centroids" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/centroid-circular-sector.png" width="250" height="250">](http://bl.ocks.org/mbostock/9b5a2fd1ce1a146f27e4)[<img alt="Annular Sector Centroids" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/centroid-annular-sector.png" width="250" height="250">](http://bl.ocks.org/mbostock/c274877f647361f3df7d)
 
-Note that this is **not the geometric center** of the arc, which may be outside the arc; this method is merely a convenience for positioning labels.
+注意，中间点 **并不是几何中心**，因为几何中心点可能位于弧之外; 这个方法可以用来方便的对 `labels` 进行定位。
 
-<a name="arc_innerRadius" href="#arc_innerRadius">#</a> <i>arc</i>.<b>innerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L230 "Source")
+<a name="arc_innerRadius" href="#arc_innerRadius">#</a> <i>arc</i>.<b>innerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L230 "Source")
 
-If *radius* is specified, sets the inner radius to the specified function or number and returns this arc generator. If *radius* is not specified, returns the current inner radius accessor, which defaults to:
+如果指定了 *radius* 则将内半径设置为指定的函数或数值并返回当前 `arc` 生成器。如果没有指定 *radius* 则返回当前的内半径访问器，默认为:
 
 ```js
 function innerRadius(d) {
@@ -112,11 +112,11 @@ function innerRadius(d) {
 }
 ```
 
-Specifying the inner radius as a function is useful for constructing a stacked polar bar chart, often in conjunction with a [sqrt scale](https://github.com/d3/d3-scale#sqrt). More commonly, a constant inner radius is used for a donut or pie chart. If the outer radius is smaller than the inner radius, the inner and outer radii are swapped. A negative value is treated as zero.
+将内半径设置为函数在生成堆叠的极坐标条形图时非常有用，通常与 [sqrt scale](https://github.com/xswei/d3-scale#sqrt) 组合。更常见的是将内半径设置为常量用来生成 `donut` 或者 `pie` 图。如果外半径小于内半径则内外半径将会被互换。负值被看做 `0`。
 
-<a name="arc_outerRadius" href="#arc_outerRadius">#</a> <i>arc</i>.<b>outerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L234 "Source")
+<a name="arc_outerRadius" href="#arc_outerRadius">#</a> <i>arc</i>.<b>outerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L234 "Source")
 
-If *radius* is specified, sets the outer radius to the specified function or number and returns this arc generator. If *radius* is not specified, returns the current outer radius accessor, which defaults to:
+如果指定了 *radius* 则将外半径设置为指定的函数或数值并返回当前 `arc` 生成器。如果没有指定 *radius* 则返回当前的外半径访问器，默认为:
 
 ```js
 function outerRadius(d) {
@@ -124,11 +124,11 @@ function outerRadius(d) {
 }
 ```
 
-Specifying the outer radius as a function is useful for constructing a coxcomb or polar bar chart, often in conjunction with a [sqrt scale](https://github.com/d3/d3-scale#sqrt). More commonly, a constant outer radius is used for a pie or donut chart. If the outer radius is smaller than the inner radius, the inner and outer radii are swapped. A negative value is treated as zero.
+将内半径设置为函数在生成 `coxcomb` 图或极坐标条形图时非常有用，通常与 [sqrt scale](https://github.com/xswei/d3-scale#sqrt) 组合。更常见的是将外半径设置为常量用来生成 `donut` 或者 `pie` 图。如果外半径小于内半径则内外半径将会被互换。负值被看做 `0`。
 
-<a name="arc_cornerRadius" href="#arc_cornerRadius">#</a> <i>arc</i>.<b>cornerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L238 "Source")
+<a name="arc_cornerRadius" href="#arc_cornerRadius">#</a> <i>arc</i>.<b>cornerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L238 "Source")
 
-If *radius* is specified, sets the corner radius to the specified function or number and returns this arc generator. If *radius* is not specified, returns the current corner radius accessor, which defaults to:
+如果指定了 *radius* 则将拐角半径设置为指定的函数或数值并返回当前 `arc` 生成器。如果没有指定 *radius* 则返回当前的拐角半径访问器，默认为:
 
 ```js
 function cornerRadius() {
@@ -136,15 +136,15 @@ function cornerRadius() {
 }
 ```
 
-If the corner radius is greater than zero, the corners of the arc are rounded using circles of the given radius. For a circular sector, the two outer corners are rounded; for an annular sector, all four corners are rounded. The corner circles are shown in this diagram:
+如果拐角半径大于 `0` 则弧度的拐角将会适用指定半径大小的圆进行圆滑。对于扇形，会有两个拐角被圆滑处理，对于环形，所有的四个拐角都会被圆滑处理。拐角处理示意图如下:
 
 [<img alt="Rounded Circular Sectors" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/rounded-circular-sector.png" width="250" height="250">](http://bl.ocks.org/mbostock/e5e3680f3079cf5c3437)[<img alt="Rounded Annular Sectors" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/rounded-annular-sector.png" width="250" height="250">](http://bl.ocks.org/mbostock/f41f50e06a6c04828b6e)
 
-The corner radius may not be larger than ([outerRadius](#arc_outerRadius) - [innerRadius](#arc_innerRadius)) / 2. In addition, for arcs whose angular span is less than π, the corner radius may be reduced as two adjacent rounded corners intersect. This is occurs more often with the inner corners. See the [arc corners animation](http://bl.ocks.org/mbostock/b7671cb38efdfa5da3af) for illustration.
+拐角半径不应该大于 ([outerRadius](#arc_outerRadius) - [innerRadius](#arc_innerRadius)) / 2。此外，对于弧长小于等于 `π` 的弧, 当两个相邻的拐角角相交时，拐角半径可以减小。这种情况更经常发生在内角。参考 [arc corners animation](http://bl.ocks.org/mbostock/b7671cb38efdfa5da3af) 中的插图。
 
-<a name="arc_startAngle" href="#arc_startAngle">#</a> <i>arc</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L246 "Source")
+<a name="arc_startAngle" href="#arc_startAngle">#</a> <i>arc</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L246 "Source")
 
-If *angle* is specified, sets the start angle to the specified function or number and returns this arc generator. If *angle* is not specified, returns the current start angle accessor, which defaults to:
+如果指定了 *angle* 则将起始角度设置为指定的函数或数值并返回当前 `arc` 生成器。如果没有指定 *angle* 则返回当前的起始角度访问器，默认为:
 
 ```js
 function startAngle(d) {
@@ -152,11 +152,11 @@ function startAngle(d) {
 }
 ```
 
-The *angle* is specified in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise. If |endAngle - startAngle| ≥ τ, a complete circle or annulus is generated rather than a sector.
+*angle* 以弧度的形式指定，`0` 表示 `12` 点钟方向并且顺时针方向为正。如果 |`endAngle` - `startAngle`| ≥ `τ` 则会绘制一个完整的扇形或圆环。
 
-<a name="arc_endAngle" href="#arc_endAngle">#</a> <i>arc</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L250 "Source")
+<a name="arc_endAngle" href="#arc_endAngle">#</a> <i>arc</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L250 "Source")
 
-If *angle* is specified, sets the end angle to the specified function or number and returns this arc generator. If *angle* is not specified, returns the current end angle accessor, which defaults to:
+如果指定了 *angle* 则将终止角度设置为指定的函数或数值并返回当前 `arc` 生成器。如果没有指定 *angle* 则返回当前的终止角度访问器，默认为:
 
 ```js
 function endAngle(d) {
@@ -164,11 +164,11 @@ function endAngle(d) {
 }
 ```
 
-The *angle* is specified in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise. If |endAngle - startAngle| ≥ τ, a complete circle or annulus is generated rather than a sector.
+*angle* 以弧度的形式指定，`0` 表示 `12` 点钟方向并且顺时针方向为正。如果 |`endAngle` - `startAngle`| ≥ `τ` 则会绘制一个完整的扇形或圆环。
 
-<a name="arc_padAngle" href="#arc_padAngle">#</a> <i>arc</i>.<b>padAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L254 "Source")
+<a name="arc_padAngle" href="#arc_padAngle">#</a> <i>arc</i>.<b>padAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L254 "Source")
 
-If *angle* is specified, sets the pad angle to the specified function or number and returns this arc generator. If *angle* is not specified, returns the current pad angle accessor, which defaults to:
+如果指定了 *angle* 则将间隙角度设置为指定的函数或数值，并返回当前 `arc` 生成器。如果 *angle* 没有指定则返回当前间隙角度访问器，默认为:
 
 ```js
 function padAngle() {
@@ -186,11 +186,11 @@ The recommended minimum inner radius when using padding is outerRadius \* padAng
 
 Often, the pad angle is not set directly on the arc generator, but is instead computed by the [pie generator](#pies) so as to ensure that the area of padded arcs is proportional to their value; see [*pie*.padAngle](#pie_padAngle). See the [pie padding animation](http://bl.ocks.org/mbostock/3e961b4c97a1b543fff2) for illustration. If you apply a constant pad angle to the arc generator directly, it tends to subtract disproportionately from smaller arcs, introducing distortion.
 
-<a name="arc_padRadius" href="#arc_padRadius">#</a> <i>arc</i>.<b>padRadius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L242 "Source")
+<a name="arc_padRadius" href="#arc_padRadius">#</a> <i>arc</i>.<b>padRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L242 "Source")
 
 If *radius* is specified, sets the pad radius to the specified function or number and returns this arc generator. If *radius* is not specified, returns the current pad radius accessor, which defaults to null, indicating that the pad radius should be automatically computed as sqrt([innerRadius](#arc_innerRadius) * innerRadius + [outerRadius](#arc_outerRadius) * outerRadius). The pad radius determines the fixed linear distance separating adjacent arcs, defined as padRadius * [padAngle](#arc_padAngle).
 
-<a name="arc_context" href="#arc_context">#</a> <i>arc</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/arc.js#L258 "Source")
+<a name="arc_context" href="#arc_context">#</a> <i>arc</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L258 "Source")
 
 If *context* is specified, sets the context and returns this arc generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated arc](#_arc) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated arc is returned.
 
@@ -198,11 +198,11 @@ If *context* is specified, sets the context and returns this arc generator. If *
 
 The pie generator does not produce a shape directly, but instead computes the necessary angles to represent a tabular dataset as a pie or donut chart; these angles can then be passed to an [arc generator](#arcs).
 
-<a name="pie" href="#pie">#</a> d3.<b>pie</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js "Source")
+<a name="pie" href="#pie">#</a> d3.<b>pie</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js "Source")
 
 Constructs a new pie generator with the default settings.
 
-<a name="_pie" href="#_pie">#</a> <i>pie</i>(<i>data</i>[, <i>arguments…</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L14 "Source")
+<a name="_pie" href="#_pie">#</a> <i>pie</i>(<i>data</i>[, <i>arguments…</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L14 "Source")
 
 Generates a pie for the given array of *data*, returning an array of objects representing each datum’s arc angles. Any additional *arguments* are arbitrary; they are simply propagated to the pie generator’s accessor functions along with the `this` object. The length of the returned array is the same as *data*, and each element *i* in the returned array corresponds to the element *i* in the input data. Each object in the returned array has the following properties:
 
@@ -239,7 +239,7 @@ The first pair of parens, `pie()`, [constructs](#pie) a default pie generator. T
 
 Note that the returned array is in the same order as the data, even though this pie chart is [sorted](#pie_sortValues) by descending value, starting with the arc for the last datum (value 21) at 12 o’clock.
 
-<a name="pie_value" href="#pie_value">#</a> <i>pie</i>.<b>value</b>([<i>value</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L54 "Source")
+<a name="pie_value" href="#pie_value">#</a> <i>pie</i>.<b>value</b>([<i>value</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L54 "Source")
 
 If *value* is specified, sets the value accessor to the specified function or number and returns this pie generator. If *value* is not specified, returns the current value accessor, which defaults to:
 
@@ -274,7 +274,7 @@ var arcs = d3.pie()(data.map(function(d) { return d.number; }));
 
 The benefit of an accessor is that the input data remains associated with the returned objects, thereby making it easier to access other fields of the data, for example to set the color or to add text labels.
 
-<a name="pie_sort" href="#pie_sort">#</a> <i>pie</i>.<b>sort</b>([<i>compare</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L62 "Source")
+<a name="pie_sort" href="#pie_sort">#</a> <i>pie</i>.<b>sort</b>([<i>compare</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L62 "Source")
 
 If *compare* is specified, sets the data comparator to the specified function and returns this pie generator. If *compare* is not specified, returns the current data comparator, which defaults to null. If both the data comparator and the value comparator are null, then arcs are positioned in the original input order. Otherwise, the data is sorted according to the data comparator, and the resulting order is used. Setting the data comparator implicitly sets the [value comparator](#pie_sortValues) to null.
 
@@ -286,7 +286,7 @@ pie.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
 Sorting does not affect the order of the [generated arc array](#_pie) which is always in the same order as the input data array; it merely affects the computed angles of each arc. The first arc starts at the [start angle](#pie_startAngle) and the last arc ends at the [end angle](#pie_endAngle).
 
-<a name="pie_sortValues" href="#pie_sortValues">#</a> <i>pie</i>.<b>sortValues</b>([<i>compare</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L58 "Source")
+<a name="pie_sortValues" href="#pie_sortValues">#</a> <i>pie</i>.<b>sortValues</b>([<i>compare</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L58 "Source")
 
 If *compare* is specified, sets the value comparator to the specified function and returns this pie generator. If *compare* is not specified, returns the current value comparator, which defaults to descending value. The default value comparator is implemented as:
 
@@ -306,7 +306,7 @@ pie.sortValues(function(a, b) { return a - b; });
 
 Sorting does not affect the order of the [generated arc array](#_pie) which is always in the same order as the input data array; it merely affects the computed angles of each arc. The first arc starts at the [start angle](#pie_startAngle) and the last arc ends at the [end angle](#pie_endAngle).
 
-<a name="pie_startAngle" href="#pie_startAngle">#</a> <i>pie</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L66 "Source")
+<a name="pie_startAngle" href="#pie_startAngle">#</a> <i>pie</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L66 "Source")
 
 If *angle* is specified, sets the overall start angle of the pie to the specified function or number and returns this pie generator. If *angle* is not specified, returns the current start angle accessor, which defaults to:
 
@@ -318,7 +318,7 @@ function startAngle() {
 
 The start angle here means the *overall* start angle of the pie, *i.e.*, the start angle of the first arc. The start angle accessor is invoked once, being passed the same arguments and `this` context as the [pie generator](#_pie). The units of *angle* are arbitrary, but if you plan to use the pie generator in conjunction with an [arc generator](#arcs), you should specify an angle in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise.
 
-<a name="pie_endAngle" href="#pie_endAngle">#</a> <i>pie</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L70 "Source")
+<a name="pie_endAngle" href="#pie_endAngle">#</a> <i>pie</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L70 "Source")
 
 If *angle* is specified, sets the overall end angle of the pie to the specified function or number and returns this pie generator. If *angle* is not specified, returns the current end angle accessor, which defaults to:
 
@@ -332,7 +332,7 @@ The end angle here means the *overall* end angle of the pie, *i.e.*, the end ang
 
 The value of the end angle is constrained to [startAngle](#pie_startAngle) ± τ, such that |endAngle - startAngle| ≤ τ.
 
-<a name="pie_padAngle" href="#pie_padAngle">#</a> <i>pie</i>.<b>padAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pie.js#L74 "Source")
+<a name="pie_padAngle" href="#pie_padAngle">#</a> <i>pie</i>.<b>padAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L74 "Source")
 
 If *angle* is specified, sets the pad angle to the specified function or number and returns this pie generator. If *angle* is not specified, returns the current pad angle accessor, which defaults to:
 
@@ -350,15 +350,15 @@ The pad angle here means the angular separation between each adjacent arc. The t
 
 The line generator produces a [spline](https://en.wikipedia.org/wiki/Spline_\(mathematics\)) or [polyline](https://en.wikipedia.org/wiki/Polygonal_chain), as in a line chart. Lines also appear in many other visualization types, such as the links in [hierarchical edge bundling](http://bl.ocks.org/mbostock/7607999).
 
-<a name="line" href="#line">#</a> d3.<b>line</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js "Source")
+<a name="line" href="#line">#</a> d3.<b>line</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js "Source")
 
 Constructs a new line generator with the default settings.
 
-<a name="_line" href="#_line">#</a> <i>line</i>(<i>data</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js#L14 "Source")
+<a name="_line" href="#_line">#</a> <i>line</i>(<i>data</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L14 "Source")
 
 Generates a line for the given array of *data*. Depending on this line generator’s associated [curve](#line_curve), the given input *data* may need to be sorted by *x*-value before being passed to the line generator. If the line generator has a [context](#line_context), then the line is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls and this function returns void. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string is returned.
 
-<a name="line_x" href="#line_x">#</a> <i>line</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js#L34 "Source")
+<a name="line_x" href="#line_x">#</a> <i>line</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L34 "Source")
 
 If *x* is specified, sets the x accessor to the specified function or number and returns this line generator. If *x* is not specified, returns the current x accessor, which defaults to:
 
@@ -368,7 +368,7 @@ function x(d) {
 }
 ```
 
-When a line is [generated](#_line), the x accessor will be invoked for each [defined](#line_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default x accessor assumes that the input data are two-element arrays of numbers. If your data are in a different format, or if you wish to transform the data before rendering, then you should specify a custom accessor. For example, if `x` is a [time scale](https://github.com/d3/d3-scale#time-scales) and `y` is a [linear scale](https://github.com/d3/d3-scale#linear-scales):
+When a line is [generated](#_line), the x accessor will be invoked for each [defined](#line_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default x accessor assumes that the input data are two-element arrays of numbers. If your data are in a different format, or if you wish to transform the data before rendering, then you should specify a custom accessor. For example, if `x` is a [time scale](https://github.com/xswei/d3-scale#time-scales) and `y` is a [linear scale](https://github.com/xswei/d3-scale#linear-scales):
 
 ```js
 var data = [
@@ -386,7 +386,7 @@ var line = d3.line()
     .y(function(d) { return y(d.value); });
 ```
 
-<a name="line_y" href="#line_y">#</a> <i>line</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js#L38 "Source")
+<a name="line_y" href="#line_y">#</a> <i>line</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L38 "Source")
 
 If *y* is specified, sets the y accessor to the specified function or number and returns this line generator. If *y* is not specified, returns the current y accessor, which defaults to:
 
@@ -398,7 +398,7 @@ function y(d) {
 
 When a line is [generated](#_line), the y accessor will be invoked for each [defined](#line_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default y accessor assumes that the input data are two-element arrays of numbers. See [*line*.x](#line_x) for more information.
 
-<a name="line_defined" href="#line_defined">#</a> <i>line</i>.<b>defined</b>([<i>defined</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js#L42 "Source")
+<a name="line_defined" href="#line_defined">#</a> <i>line</i>.<b>defined</b>([<i>defined</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L42 "Source")
 
 If *defined* is specified, sets the defined accessor to the specified function or boolean and returns this line generator. If *defined* is not specified, returns the current defined accessor, which defaults to:
 
@@ -414,29 +414,29 @@ The default accessor thus assumes that the input data is always defined. When a 
 
 Note that if a line segment consists of only a single point, it may appear invisible unless rendered with rounded or square [line caps](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap). In addition, some curves such as [curveCardinalOpen](#curveCardinalOpen) only render a visible segment if it contains multiple points.
 
-<a name="line_curve" href="#line_curve">#</a> <i>line</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js#L46 "Source")
+<a name="line_curve" href="#line_curve">#</a> <i>line</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L46 "Source")
 
 If *curve* is specified, sets the [curve factory](#curves) and returns this line generator. If *curve* is not specified, returns the current curve factory, which defaults to [curveLinear](#curveLinear).
 
-<a name="line_context" href="#line_context">#</a> <i>line</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/line.js#L50 "Source")
+<a name="line_context" href="#line_context">#</a> <i>line</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L50 "Source")
 
 If *context* is specified, sets the context and returns this line generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated line](#_line) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated line is returned.
 
-<a name="lineRadial" href="#lineRadial">#</a> d3.<b>lineRadial</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/lineRadial.js "Source")
+<a name="lineRadial" href="#lineRadial">#</a> d3.<b>lineRadial</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/lineRadial.js "Source")
 
 <img alt="Radial Line" width="250" height="250" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/line-radial.png">
 
 Constructs a new radial line generator with the default settings. A radial line generator is equivalent to the standard Cartesian [line generator](#line), except the [x](#line_x) and [y](#line_y) accessors are replaced with [angle](#lineRadial_angle) and [radius](#lineRadial_radius) accessors. Radial lines are always positioned relative to ⟨0,0⟩; use a transform (see: [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations)) to change the origin.
 
-<a name="_lineRadial" href="#_lineRadial">#</a> <i>lineRadial</i>(<i>data</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/lineRadial.js#L4 "Source")
+<a name="_lineRadial" href="#_lineRadial">#</a> <i>lineRadial</i>(<i>data</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/lineRadial.js#L4 "Source")
 
 Equivalent to [*line*](#_line).
 
-<a name="lineRadial_angle" href="#lineRadial_angle">#</a> <i>lineRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/lineRadial.js#L7 "Source")
+<a name="lineRadial_angle" href="#lineRadial_angle">#</a> <i>lineRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/lineRadial.js#L7 "Source")
 
 Equivalent to [*line*.x](#line_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
 
-<a name="lineRadial_radius" href="#lineRadial_radius">#</a> <i>lineRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/lineRadial.js#L8 "Source")
+<a name="lineRadial_radius" href="#lineRadial_radius">#</a> <i>lineRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/lineRadial.js#L8 "Source")
 
 Equivalent to [*line*.y](#line_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
 
@@ -444,7 +444,7 @@ Equivalent to [*line*.y](#line_y), except the accessor returns the radius: the d
 
 Equivalent to [*line*.defined](#line_defined).
 
-<a name="lineRadial_curve" href="#lineRadial_curve">#</a> <i>lineRadial</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/lineRadial.js#L10 "Source")
+<a name="lineRadial_curve" href="#lineRadial_curve">#</a> <i>lineRadial</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/lineRadial.js#L10 "Source")
 
 Equivalent to [*line*.curve](#line_curve). Note that [curveMonotoneX](#curveMonotoneX) or [curveMonotoneY](#curveMonotoneY) are not recommended for radial lines because they assume that the data is monotonic in *x* or *y*, which is typically untrue of radial lines.
 
@@ -458,19 +458,19 @@ Equivalent to [*line*.context](#line_context).
 
 The area generator produces an area, as in an area chart. An area is defined by two bounding [lines](#lines), either splines or polylines. Typically, the two lines share the same [*x*-values](#area_x) ([x0](#area_x0) = [x1](#area_x1)), differing only in *y*-value ([y0](#area_y0) and [y1](#area_y1)); most commonly, y0 is defined as a constant representing [zero](http://www.vox.com/2015/11/19/9758062/y-axis-zero-chart). The first line (the <i>topline</i>) is defined by x1 and y1 and is rendered first; the second line (the <i>baseline</i>) is defined by x0 and y0 and is rendered second, with the points in reverse order. With a [curveLinear](#curveLinear) [curve](#area_curve), this produces a clockwise polygon.
 
-<a name="area" href="#area">#</a> d3.<b>area</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js "Source")
+<a name="area" href="#area">#</a> d3.<b>area</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js "Source")
 
 Constructs a new area generator with the default settings.
 
-<a name="_area" href="#_area">#</a> <i>area</i>(<i>data</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L17 "Source")
+<a name="_area" href="#_area">#</a> <i>area</i>(<i>data</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L17 "Source")
 
 Generates an area for the given array of *data*. Depending on this area generator’s associated [curve](#area_curve), the given input *data* may need to be sorted by *x*-value before being passed to the area generator. If the area generator has a [context](#line_context), then the area is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls and this function returns void. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string is returned.
 
-<a name="area_x" href="#area_x">#</a> <i>area</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L59 "Source")
+<a name="area_x" href="#area_x">#</a> <i>area</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L59 "Source")
 
 If *x* is specified, sets [x0](#area_x0) to *x* and [x1](#area_x1) to null and returns this area generator. If *x* is not specified, returns the current x0 accessor.
 
-<a name="area_x0" href="#area_x0">#</a> <i>area</i>.<b>x0</b>([<i>x</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L63 "Source")
+<a name="area_x0" href="#area_x0">#</a> <i>area</i>.<b>x0</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L63 "Source")
 
 If *x* is specified, sets the x0 accessor to the specified function or number and returns this area generator. If *x* is not specified, returns the current x0 accessor, which defaults to:
 
@@ -480,7 +480,7 @@ function x(d) {
 }
 ```
 
-When an area is [generated](#_area), the x0 accessor will be invoked for each [defined](#area_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default x0 accessor assumes that the input data are two-element arrays of numbers. If your data are in a different format, or if you wish to transform the data before rendering, then you should specify a custom accessor. For example, if `x` is a [time scale](https://github.com/d3/d3-scale#time-scales) and `y` is a [linear scale](https://github.com/d3/d3-scale#linear-scales):
+When an area is [generated](#_area), the x0 accessor will be invoked for each [defined](#area_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default x0 accessor assumes that the input data are two-element arrays of numbers. If your data are in a different format, or if you wish to transform the data before rendering, then you should specify a custom accessor. For example, if `x` is a [time scale](https://github.com/xswei/d3-scale#time-scales) and `y` is a [linear scale](https://github.com/xswei/d3-scale#linear-scales):
 
 ```js
 var data = [
@@ -499,17 +499,17 @@ var area = d3.area()
     .y0(y(0));
 ```
 
-<a name="area_x1" href="#area_x1">#</a> <i>area</i>.<b>x1</b>([<i>x</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L67 "Source")
+<a name="area_x1" href="#area_x1">#</a> <i>area</i>.<b>x1</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L67 "Source")
 
 If *x* is specified, sets the x1 accessor to the specified function or number and returns this area generator. If *x* is not specified, returns the current x1 accessor, which defaults to null, indicating that the previously-computed [x0](#area_x0) value should be reused for the x1 value.
 
 When an area is [generated](#_area), the x1 accessor will be invoked for each [defined](#area_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. See [*area*.x0](#area_x0) for more information.
 
-<a name="area_y" href="#area_y">#</a> <i>area</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L71 "Source")
+<a name="area_y" href="#area_y">#</a> <i>area</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L71 "Source")
 
 If *y* is specified, sets [y0](#area_y0) to *y* and [y1](#area_y1) to null and returns this area generator. If *y* is not specified, returns the current y0 accessor.
 
-<a name="area_y0" href="#area_y0">#</a> <i>area</i>.<b>y0</b>([<i>y</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L75 "Source")
+<a name="area_y0" href="#area_y0">#</a> <i>area</i>.<b>y0</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L75 "Source")
 
 If *y* is specified, sets the y0 accessor to the specified function or number and returns this area generator. If *y* is not specified, returns the current y0 accessor, which defaults to:
 
@@ -521,7 +521,7 @@ function y() {
 
 When an area is [generated](#_area), the y0 accessor will be invoked for each [defined](#area_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. See [*area*.x0](#area_x0) for more information.
 
-<a name="area_y1" href="#area_y1">#</a> <i>area</i>.<b>y1</b>([<i>y</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L79 "Source")
+<a name="area_y1" href="#area_y1">#</a> <i>area</i>.<b>y1</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L79 "Source")
 
 If *y* is specified, sets the y1 accessor to the specified function or number and returns this area generator. If *y* is not specified, returns the current y1 accessor, which defaults to:
 
@@ -533,7 +533,7 @@ function y(d) {
 
 A null accessor is also allowed, indicating that the previously-computed [y0](#area_y0) value should be reused for the y1 value. When an area is [generated](#_area), the y1 accessor will be invoked for each [defined](#area_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. See [*area*.x0](#area_x0) for more information.
 
-<a name="area_defined" href="#area_defined">#</a> <i>area</i>.<b>defined</b>([<i>defined</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L96 "Source")
+<a name="area_defined" href="#area_defined">#</a> <i>area</i>.<b>defined</b>([<i>defined</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L96 "Source")
 
 If *defined* is specified, sets the defined accessor to the specified function or boolean and returns this area generator. If *defined* is not specified, returns the current defined accessor, which defaults to:
 
@@ -549,28 +549,28 @@ The default accessor thus assumes that the input data is always defined. When an
 
 Note that if an area segment consists of only a single point, it may appear invisible unless rendered with rounded or square [line caps](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap). In addition, some curves such as [curveCardinalOpen](#curveCardinalOpen) only render a visible segment if it contains multiple points.
 
-<a name="area_curve" href="#area_curve">#</a> <i>area</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L100 "Source")
+<a name="area_curve" href="#area_curve">#</a> <i>area</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L100 "Source")
 
 If *curve* is specified, sets the [curve factory](#curves) and returns this area generator. If *curve* is not specified, returns the current curve factory, which defaults to [curveLinear](#curveLinear).
 
-<a name="area_context" href="#area_context">#</a> <i>area</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L104 "Source")
+<a name="area_context" href="#area_context">#</a> <i>area</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L104 "Source")
 
 If *context* is specified, sets the context and returns this area generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated area](#_area) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated area is returned.
 
-<a name="area_lineX0" href="#area_lineX0">#</a> <i>area</i>.<b>lineX0</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L83 "Source")
-<br><a name="area_lineY0" href="#area_lineY0">#</a> <i>area</i>.<b>lineY0</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L84 "Source")
+<a name="area_lineX0" href="#area_lineX0">#</a> <i>area</i>.<b>lineX0</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L83 "Source")
+<br><a name="area_lineY0" href="#area_lineY0">#</a> <i>area</i>.<b>lineY0</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L84 "Source")
 
 Returns a new [line generator](#lines) that has this area generator’s current [defined accessor](#area_defined), [curve](#area_curve) and [context](#area_context). The line’s [*x*-accessor](#line_x) is this area’s [*x0*-accessor](#area_x0), and the line’s [*y*-accessor](#line_y) is this area’s [*y0*-accessor](#area_y0).
 
-<a name="area_lineX1" href="#area_lineX1">#</a> <i>area</i>.<b>lineX1</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L92 "Source")
+<a name="area_lineX1" href="#area_lineX1">#</a> <i>area</i>.<b>lineX1</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L92 "Source")
 
 Returns a new [line generator](#lines) that has this area generator’s current [defined accessor](#area_defined), [curve](#area_curve) and [context](#area_context). The line’s [*x*-accessor](#line_x) is this area’s [*x1*-accessor](#area_x1), and the line’s [*y*-accessor](#line_y) is this area’s [*y0*-accessor](#area_y0).
 
-<a name="area_lineY1" href="#area_lineY1">#</a> <i>area</i>.<b>lineY1</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/area.js#L88 "Source")
+<a name="area_lineY1" href="#area_lineY1">#</a> <i>area</i>.<b>lineY1</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/area.js#L88 "Source")
 
 Returns a new [line generator](#lines) that has this area generator’s current [defined accessor](#area_defined), [curve](#area_curve) and [context](#area_context). The line’s [*x*-accessor](#line_x) is this area’s [*x0*-accessor](#area_x0), and the line’s [*y*-accessor](#line_y) is this area’s [*y1*-accessor](#area_y1).
 
-<a name="areaRadial" href="#areaRadial">#</a> d3.<b>areaRadial</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js "Source")
+<a name="areaRadial" href="#areaRadial">#</a> d3.<b>areaRadial</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js "Source")
 
 <img alt="Radial Area" width="250" height="250" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/area-radial.png">
 
@@ -580,27 +580,27 @@ Constructs a new radial area generator with the default settings. A radial area 
 
 Equivalent to [*area*](#_area).
 
-<a name="areaRadial_angle" href="#areaRadial_angle">#</a> <i>areaRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L13 "Source")
+<a name="areaRadial_angle" href="#areaRadial_angle">#</a> <i>areaRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L13 "Source")
 
 Equivalent to [*area*.x](#area_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
 
-<a name="areaRadial_startAngle" href="#areaRadial_startAngle">#</a> <i>areaRadial</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L14 "Source")
+<a name="areaRadial_startAngle" href="#areaRadial_startAngle">#</a> <i>areaRadial</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L14 "Source")
 
 Equivalent to [*area*.x0](#area_x0), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock). Note: typically [angle](#areaRadial_angle) is used instead of setting separate start and end angles.
 
-<a name="areaRadial_endAngle" href="#areaRadial_endAngle">#</a> <i>areaRadial</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L15 "Source")
+<a name="areaRadial_endAngle" href="#areaRadial_endAngle">#</a> <i>areaRadial</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L15 "Source")
 
 Equivalent to [*area*.x1](#area_x1), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock). Note: typically [angle](#areaRadial_angle) is used instead of setting separate start and end angles.
 
-<a name="areaRadial_radius" href="#areaRadial_radius">#</a> <i>areaRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L16 "Source")
+<a name="areaRadial_radius" href="#areaRadial_radius">#</a> <i>areaRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L16 "Source")
 
 Equivalent to [*area*.y](#area_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
 
-<a name="areaRadial_innerRadius" href="#areaRadial_innerRadius">#</a> <i>areaRadial</i>.<b>innerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L17 "Source")
+<a name="areaRadial_innerRadius" href="#areaRadial_innerRadius">#</a> <i>areaRadial</i>.<b>innerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L17 "Source")
 
 Equivalent to [*area*.y0](#area_y0), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
 
-<a name="areaRadial_outerRadius" href="#areaRadial_outerRadius">#</a> <i>areaRadial</i>.<b>outerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L18 "Source")
+<a name="areaRadial_outerRadius" href="#areaRadial_outerRadius">#</a> <i>areaRadial</i>.<b>outerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L18 "Source")
 
 Equivalent to [*area*.y1](#area_y1), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
 
@@ -608,7 +608,7 @@ Equivalent to [*area*.y1](#area_y1), except the accessor returns the radius: the
 
 Equivalent to [*area*.defined](#area_defined).
 
-<a name="areaRadial_curve" href="#areaRadial_curve">#</a> <i>areaRadial</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L24 "Source")
+<a name="areaRadial_curve" href="#areaRadial_curve">#</a> <i>areaRadial</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L24 "Source")
 
 Equivalent to [*area*.curve](#area_curve). Note that [curveMonotoneX](#curveMonotoneX) or [curveMonotoneY](#curveMonotoneY) are not recommended for radial areas because they assume that the data is monotonic in *x* or *y*, which is typically untrue of radial areas.
 
@@ -616,16 +616,16 @@ Equivalent to [*area*.curve](#area_curve). Note that [curveMonotoneX](#curveMono
 
 Equivalent to [*line*.context](#line_context).
 
-<a name="areaRadial_lineStartAngle" href="#areaRadial_lineStartAngle">#</a> <i>areaRadial</i>.<b>lineStartAngle</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L19 "Source")
-<br><a name="areaRadial_lineInnerRadius" href="#areaRadial_lineInnerRadius">#</a> <i>areaRadial</i>.<b>lineInnerRadius</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L21 "Source")
+<a name="areaRadial_lineStartAngle" href="#areaRadial_lineStartAngle">#</a> <i>areaRadial</i>.<b>lineStartAngle</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L19 "Source")
+<br><a name="areaRadial_lineInnerRadius" href="#areaRadial_lineInnerRadius">#</a> <i>areaRadial</i>.<b>lineInnerRadius</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L21 "Source")
 
 Returns a new [radial line generator](#lineRadial) that has this radial area generator’s current [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) and [context](#areaRadial_context). The line’s [angle accessor](#lineRadial_angle) is this area’s [start angle accessor](#areaRadial_startAngle), and the line’s [radius accessor](#lineRadial_radius) is this area’s [inner radius accessor](#areaRadial_innerRadius).
 
-<a name="areaRadial_lineEndAngle" href="#areaRadial_lineEndAngle">#</a> <i>areaRadial</i>.<b>lineEndAngle</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L20 "Source")
+<a name="areaRadial_lineEndAngle" href="#areaRadial_lineEndAngle">#</a> <i>areaRadial</i>.<b>lineEndAngle</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L20 "Source")
 
 Returns a new [radial line generator](#lineRadial) that has this radial area generator’s current [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) and [context](#areaRadial_context). The line’s [angle accessor](#lineRadial_angle) is this area’s [end angle accessor](#areaRadial_endAngle), and the line’s [radius accessor](#lineRadial_radius) is this area’s [inner radius accessor](#areaRadial_innerRadius).
 
-<a name="areaRadial_lineOuterRadius" href="#areaRadial_lineOuterRadius">#</a> <i>areaRadial</i>.<b>lineOuterRadius</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/areaRadial.js#L22 "Source")
+<a name="areaRadial_lineOuterRadius" href="#areaRadial_lineOuterRadius">#</a> <i>areaRadial</i>.<b>lineOuterRadius</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L22 "Source")
 
 Returns a new [radial line generator](#lineRadial) that has this radial area generator’s current [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) and [context](#areaRadial_context). The line’s [angle accessor](#lineRadial_angle) is this area’s [start angle accessor](#areaRadial_startAngle), and the line’s [radius accessor](#lineRadial_radius) is this area’s [outer radius accessor](#areaRadial_outerRadius).
 
@@ -642,31 +642,31 @@ var line = d3.line()
     .curve(d3.curveCatmullRom.alpha(0.5));
 ```
 
-<a name="curveBasis" href="#curveBasis">#</a> d3.<b>curveBasis</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/basis.js#L12 "Source")
+<a name="curveBasis" href="#curveBasis">#</a> d3.<b>curveBasis</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/basis.js#L12 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/basis.png" width="888" height="240" alt="basis">
 
 Produces a cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points. The first and last points are triplicated such that the spline starts at the first point and ends at the last point, and is tangent to the line between the first and second points, and to the line between the penultimate and last points.
 
-<a name="curveBasisClosed" href="#curveBasisClosed">#</a> d3.<b>curveBasisClosed</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/basisClosed.js "Source")
+<a name="curveBasisClosed" href="#curveBasisClosed">#</a> d3.<b>curveBasisClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/basisClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/basisClosed.png" width="888" height="240" alt="basisClosed">
 
 Produces a closed cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points. When a line segment ends, the first three control points are repeated, producing a closed loop with C2 continuity.
 
-<a name="curveBasisOpen" href="#curveBasisOpen">#</a> d3.<b>curveBasisOpen</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/basisOpen.js "Source")
+<a name="curveBasisOpen" href="#curveBasisOpen">#</a> d3.<b>curveBasisOpen</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/basisOpen.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/basisOpen.png" width="888" height="240" alt="basisOpen">
 
 Produces a cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points. Unlike [basis](#basis), the first and last points are not repeated, and thus the curve typically does not intersect these points.
 
-<a name="curveBundle" href="#curveBundle">#</a> d3.<b>curveBundle</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/bundle.js "Source")
+<a name="curveBundle" href="#curveBundle">#</a> d3.<b>curveBundle</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/bundle.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/bundle.png" width="888" height="240" alt="bundle">
 
 Produces a straightened cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points, with the spline straightened according to the curve’s [*beta*](#curveBundle_beta), which defaults to 0.85. This curve is typically used in [hierarchical edge bundling](http://bl.ocks.org/mbostock/7607999) to disambiguate connections, as proposed by [Danny Holten](https://www.win.tue.nl/vis1/home/dholten/) in [Hierarchical Edge Bundles: Visualization of Adjacency Relations in Hierarchical Data](https://www.win.tue.nl/vis1/home/dholten/papers/bundles_infovis.pdf). This curve does not implement [*curve*.areaStart](#curve_areaStart) and [*curve*.areaEnd](#curve_areaEnd); it is intended to work with [d3.line](#lines), not [d3.area](#areas).
 
-<a name="curveBundle_beta" href="#curveBundle_beta">#</a> <i>bundle</i>.<b>beta</b>(<i>beta</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/bundle.js#L51 "Source")
+<a name="curveBundle_beta" href="#curveBundle_beta">#</a> <i>bundle</i>.<b>beta</b>(<i>beta</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/bundle.js#L51 "Source")
 
 Returns a bundle curve with the specified *beta* in the range [0, 1], representing the bundle strength. If *beta* equals zero, a straight line between the first and last point is produced; if *beta* equals one, a standard [basis](#basis) spline is produced. For example:
 
@@ -674,25 +674,25 @@ Returns a bundle curve with the specified *beta* in the range [0, 1], representi
 var line = d3.line().curve(d3.curveBundle.beta(0.5));
 ```
 
-<a name="curveCardinal" href="#curveCardinal">#</a> d3.<b>curveCardinal</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/cardinal.js "Source")
+<a name="curveCardinal" href="#curveCardinal">#</a> d3.<b>curveCardinal</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinal.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cardinal.png" width="888" height="240" alt="cardinal">
 
 Produces a cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) using the specified control points, with one-sided differences used for the first and last piece. The default [tension](#curveCardinal_tension) is 0.
 
-<a name="curveCardinalClosed" href="#curveCardinalClosed">#</a> d3.<b>curveCardinalClosed</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/cardinalClosed.js "Source")
+<a name="curveCardinalClosed" href="#curveCardinalClosed">#</a> d3.<b>curveCardinalClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cardinalClosed.png" width="888" height="240" alt="cardinalClosed">
 
 Produces a closed cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) using the specified control points. When a line segment ends, the first three control points are repeated, producing a closed loop. The default [tension](#curveCardinal_tension) is 0.
 
-<a name="curveCardinalOpen" href="#curveCardinalOpen">#</a> d3.<b>curveCardinalOpen</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/cardinalOpen.js "Source")
+<a name="curveCardinalOpen" href="#curveCardinalOpen">#</a> d3.<b>curveCardinalOpen</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalOpen.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cardinalOpen.png" width="888" height="240" alt="cardinalOpen">
 
 Produces a cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) using the specified control points. Unlike [curveCardinal](#curveCardinal), one-sided differences are not used for the first and last piece, and thus the curve starts at the second point and ends at the penultimate point. The default [tension](#curveCardinal_tension) is 0.
 
-<a name="curveCardinal_tension" href="#curveCardinal_tension">#</a> <i>cardinal</i>.<b>tension</b>(<i>tension</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/cardinalOpen.js#L44 "Source")
+<a name="curveCardinal_tension" href="#curveCardinal_tension">#</a> <i>cardinal</i>.<b>tension</b>(<i>tension</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalOpen.js#L44 "Source")
 
 Returns a cardinal curve with the specified *tension* in the range [0, 1]. The *tension* determines the length of the tangents: a *tension* of one yields all zero tangents, equivalent to [curveLinear](#curveLinear); a *tension* of zero produces a uniform [Catmull–Rom](#curveCatmullRom) spline. For example:
 
@@ -700,25 +700,25 @@ Returns a cardinal curve with the specified *tension* in the range [0, 1]. The *
 var line = d3.line().curve(d3.curveCardinal.tension(0.5));
 ```
 
-<a name="curveCatmullRom" href="#curveCatmullRom">#</a> d3.<b>curveCatmullRom</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/catmullRom.js "Source")
+<a name="curveCatmullRom" href="#curveCatmullRom">#</a> d3.<b>curveCatmullRom</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRom.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/catmullRom.png" width="888" height="240" alt="catmullRom">
 
 Produces a cubic Catmull–Rom spline using the specified control points and the parameter [*alpha*](#catmullRom_alpha), which defaults to 0.5, as proposed by Yuksel et al. in [On the Parameterization of Catmull–Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/), with one-sided differences used for the first and last piece.
 
-<a name="curveCatmullRomClosed" href="#curveCatmullRomClosed">#</a> d3.<b>curveCatmullRomClosed</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/catmullRomClosed.js "Source")
+<a name="curveCatmullRomClosed" href="#curveCatmullRomClosed">#</a> d3.<b>curveCatmullRomClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRomClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/catmullRomClosed.png" width="888" height="330" alt="catmullRomClosed">
 
 Produces a closed cubic Catmull–Rom spline using the specified control points and the parameter [*alpha*](#catmullRom_alpha), which defaults to 0.5, as proposed by Yuksel et al. When a line segment ends, the first three control points are repeated, producing a closed loop.
 
-<a name="curveCatmullRomOpen" href="#curveCatmullRomOpen">#</a> d3.<b>curveCatmullRomOpen</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/catmullRomOpen.js "Source")
+<a name="curveCatmullRomOpen" href="#curveCatmullRomOpen">#</a> d3.<b>curveCatmullRomOpen</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRomOpen.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/catmullRomOpen.png" width="888" height="240" alt="catmullRomOpen">
 
 Produces a cubic Catmull–Rom spline using the specified control points and the parameter [*alpha*](#catmullRom_alpha), which defaults to 0.5, as proposed by Yuksel et al. Unlike [curveCatmullRom](#curveCatmullRom), one-sided differences are not used for the first and last piece, and thus the curve starts at the second point and ends at the penultimate point.
 
-<a name="curveCatmullRom_alpha" href="#curveCatmullRom_alpha">#</a> <i>catmullRom</i>.<b>alpha</b>(<i>alpha</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/catmullRom.js#L83 "Source")
+<a name="curveCatmullRom_alpha" href="#curveCatmullRom_alpha">#</a> <i>catmullRom</i>.<b>alpha</b>(<i>alpha</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRom.js#L83 "Source")
 
 Returns a cubic Catmull–Rom curve with the specified *alpha* in the range [0, 1]. If *alpha* is zero, produces a uniform spline, equivalent to [curveCardinal](#curveCardinal) with a tension of zero; if *alpha* is one, produces a chordal spline; if *alpha* is 0.5, produces a [centripetal spline](https://en.wikipedia.org/wiki/Centripetal_Catmull–Rom_spline). Centripetal splines are recommended to avoid self-intersections and overshoot. For example:
 
@@ -726,49 +726,49 @@ Returns a cubic Catmull–Rom curve with the specified *alpha* in the range [0, 
 var line = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
 ```
 
-<a name="curveLinear" href="#curveLinear">#</a> d3.<b>curveLinear</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/linear.js "Source")
+<a name="curveLinear" href="#curveLinear">#</a> d3.<b>curveLinear</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/linear.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/linear.png" width="888" height="240" alt="linear">
 
 Produces a polyline through the specified points.
 
-<a name="curveLinearClosed" href="#curveLinearClosed">#</a> d3.<b>curveLinearClosed</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/linearClosed.js "Source")
+<a name="curveLinearClosed" href="#curveLinearClosed">#</a> d3.<b>curveLinearClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/linearClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/linearClosed.png" width="888" height="240" alt="linearClosed">
 
 Produces a closed polyline through the specified points by repeating the first point when the line segment ends.
 
-<a name="curveMonotoneX" href="#curveMonotoneX">#</a> d3.<b>curveMonotoneX</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/monotone.js#L98 "Source")
+<a name="curveMonotoneX" href="#curveMonotoneX">#</a> d3.<b>curveMonotoneX</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/monotone.js#L98 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/monotoneX.png" width="888" height="240" alt="monotoneX">
 
 Produces a cubic spline that [preserves monotonicity](https://en.wikipedia.org/wiki/Monotone_cubic_interpolation) in *y*, assuming monotonicity in *x*, as proposed by Steffen in [A simple method for monotonic interpolation in one dimension](http://adsabs.harvard.edu/full/1990A%26A...239..443S): “a smooth curve with continuous first-order derivatives that passes through any given set of data points without spurious oscillations. Local extrema can occur only at grid points where they are given by the data, but not in between two adjacent grid points.”
 
-<a name="curveMonotoneY" href="#curveMonotoneY">#</a> d3.<b>curveMonotoneY</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/monotone.js#L102 "Source")
+<a name="curveMonotoneY" href="#curveMonotoneY">#</a> d3.<b>curveMonotoneY</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/monotone.js#L102 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/monotoneY.png" width="888" height="240" alt="monotoneY">
 
 Produces a cubic spline that [preserves monotonicity](https://en.wikipedia.org/wiki/Monotone_cubic_interpolation) in *x*, assuming monotonicity in *y*, as proposed by Steffen in [A simple method for monotonic interpolation in one dimension](http://adsabs.harvard.edu/full/1990A%26A...239..443S): “a smooth curve with continuous first-order derivatives that passes through any given set of data points without spurious oscillations. Local extrema can occur only at grid points where they are given by the data, but not in between two adjacent grid points.”
 
-<a name="curveNatural" href="#curveNatural">#</a> d3.<b>curveNatural</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/natural.js "Source")
+<a name="curveNatural" href="#curveNatural">#</a> d3.<b>curveNatural</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/natural.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/natural.png" width="888" height="240" alt="natural">
 
 Produces a [natural](https://en.wikipedia.org/wiki/Spline_interpolation) [cubic spline](http://mathworld.wolfram.com/CubicSpline.html) with the second derivative of the spline set to zero at the endpoints.
 
-<a name="curveStep" href="#curveStep">#</a> d3.<b>curveStep</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js "Source")
+<a name="curveStep" href="#curveStep">#</a> d3.<b>curveStep</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/step.png" width="888" height="240" alt="step">
 
 Produces a piecewise constant function (a [step function](https://en.wikipedia.org/wiki/Step_function)) consisting of alternating horizontal and vertical lines. The *y*-value changes at the midpoint of each pair of adjacent *x*-values.
 
-<a name="curveStepAfter" href="#curveStepAfter">#</a> d3.<b>curveStepAfter</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L51 "Source")
+<a name="curveStepAfter" href="#curveStepAfter">#</a> d3.<b>curveStepAfter</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L51 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stepAfter.png" width="888" height="240" alt="stepAfter">
 
 Produces a piecewise constant function (a [step function](https://en.wikipedia.org/wiki/Step_function)) consisting of alternating horizontal and vertical lines. The *y*-value changes after the *x*-value.
 
-<a name="curveStepBefore" href="#curveStepBefore">#</a> d3.<b>curveStepBefore</b>(<i>context</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L47 "Source")
+<a name="curveStepBefore" href="#curveStepBefore">#</a> d3.<b>curveStepBefore</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L47 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stepBefore.png" width="888" height="240" alt="stepBefore">
 
@@ -778,23 +778,23 @@ Produces a piecewise constant function (a [step function](https://en.wikipedia.o
 
 Curves are typically not used directly, instead being passed to [*line*.curve](#line_curve) and [*area*.curve](#area_curve). However, you can define your own curve implementation should none of the built-in curves satisfy your needs using the following interface. You can also use this low-level interface with a built-in curve type as an alternative to the line and area generators.
 
-<a name="curve_areaStart" href="#curve_areaStart">#</a> <i>curve</i>.<b>areaStart</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L7 "Source")
+<a name="curve_areaStart" href="#curve_areaStart">#</a> <i>curve</i>.<b>areaStart</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L7 "Source")
 
 Indicates the start of a new area segment. Each area segment consists of exactly two [line segments](#curve_lineStart): the topline, followed by the baseline, with the baseline points in reverse order.
 
-<a name="curve_areaEnd" href="#curve_areaEnd">#</a> <i>curve</i>.<b>areaEnd</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L10 "Source")
+<a name="curve_areaEnd" href="#curve_areaEnd">#</a> <i>curve</i>.<b>areaEnd</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L10 "Source")
 
 Indicates the end of the current area segment.
 
-<a name="curve_lineStart" href="#curve_lineStart">#</a> <i>curve</i>.<b>lineStart</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L13 "Source")
+<a name="curve_lineStart" href="#curve_lineStart">#</a> <i>curve</i>.<b>lineStart</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L13 "Source")
 
 Indicates the start of a new line segment. Zero or more [points](#curve_point) will follow.
 
-<a name="curve_lineEnd" href="#curve_lineEnd">#</a> <i>curve</i>.<b>lineEnd</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L17 "Source")
+<a name="curve_lineEnd" href="#curve_lineEnd">#</a> <i>curve</i>.<b>lineEnd</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L17 "Source")
 
 Indicates the end of the current line segment.
 
-<a name="curve_point" href="#curve_point">#</a> <i>curve</i>.<b>point</b>(<i>x</i>, <i>y</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/curve/step.js#L22 "Source")
+<a name="curve_point" href="#curve_point">#</a> <i>curve</i>.<b>point</b>(<i>x</i>, <i>y</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L22 "Source")
 
 Indicates a new point in the current line segment with the given *x*- and *y*-values.
 
@@ -804,9 +804,9 @@ Indicates a new point in the current line segment with the given *x*- and *y*-va
 
 The **link** shape generates a smooth cubic Bézier curve from a source point to a target point. The tangents of the curve at the start and end are either [vertical](#linkVertical), [horizontal](#linkHorizontal) or [radial](#linkRadial).
 
-<a name="linkVertical" href="#linkVertical">#</a> d3.<b>linkVertical</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L74 "Source")
+<a name="linkVertical" href="#linkVertical">#</a> d3.<b>linkVertical</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L74 "Source")
 
-Returns a new [link generator](#_link) with vertical tangents. For example, to visualize [links](https://github.com/d3/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/d3/d3-hierarchy/blob/master/README.md#tree) rooted on the top edge of the display, you might say:
+Returns a new [link generator](#_link) with vertical tangents. For example, to visualize [links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) rooted on the top edge of the display, you might say:
 
 ```js
 var link = d3.linkVertical()
@@ -814,9 +814,9 @@ var link = d3.linkVertical()
     .y(function(d) { return d.y; });
 ```
 
-<a name="linkHorizontal" href="#linkHorizontal">#</a> d3.<b>linkHorizontal</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L70 "Source")
+<a name="linkHorizontal" href="#linkHorizontal">#</a> d3.<b>linkHorizontal</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L70 "Source")
 
-Returns a new [link generator](#_link) with horizontal tangents. For example, to visualize [links](https://github.com/d3/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/d3/d3-hierarchy/blob/master/README.md#tree) rooted on the left edge of the display, you might say:
+Returns a new [link generator](#_link) with horizontal tangents. For example, to visualize [links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) rooted on the left edge of the display, you might say:
 
 ```js
 var link = d3.linkHorizontal()
@@ -824,7 +824,7 @@ var link = d3.linkHorizontal()
     .y(function(d) { return d.x; });
 ```
 
-<a href="#_link" name="_link">#</a> <i>link</i>(<i>arguments…</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L21 "Source")
+<a href="#_link" name="_link">#</a> <i>link</i>(<i>arguments…</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L21 "Source")
 
 Generates a link for the given *arguments*. The *arguments* are arbitrary; they are simply propagated to the link generator’s accessor functions along with the `this` object. For example, with the default settings, an object expected:
 
@@ -835,7 +835,7 @@ link({
 });
 ```
 
-<a name="link_source" href="#link_source">#</a> <i>link</i>.<b>source</b>([<i>source</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L28 "Source")
+<a name="link_source" href="#link_source">#</a> <i>link</i>.<b>source</b>([<i>source</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L28 "Source")
 
 If *source* is specified, sets the source accessor to the specified function and returns this link generator. If *source* is not specified, returns the current source accessor, which defaults to:
 
@@ -845,7 +845,7 @@ function source(d) {
 }
 ```
 
-<a name="link_target" href="#link_target">#</a> <i>link</i>.<b>target</b>([<i>target</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L32 "Source")
+<a name="link_target" href="#link_target">#</a> <i>link</i>.<b>target</b>([<i>target</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L32 "Source")
 
 If *target* is specified, sets the target accessor to the specified function and returns this link generator. If *target* is not specified, returns the current target accessor, which defaults to:
 
@@ -855,7 +855,7 @@ function target(d) {
 }
 ```
 
-<a name="link_x" href="#link_x">#</a> <i>link</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L36 "Source")
+<a name="link_x" href="#link_x">#</a> <i>link</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L36 "Source")
 
 If *x* is specified, sets the *x*-accessor to the specified function or number and returns this link generator. If *x* is not specified, returns the current *x*-accessor, which defaults to:
 
@@ -865,7 +865,7 @@ function x(d) {
 }
 ```
 
-<a name="link_y" href="#link_y">#</a> <i>link</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L40 "Source")
+<a name="link_y" href="#link_y">#</a> <i>link</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L40 "Source")
 
 If *y* is specified, sets the *y*-accessor to the specified function or number and returns this link generator. If *y* is not specified, returns the current *y*-accessor, which defaults to:
 
@@ -875,13 +875,13 @@ function y(d) {
 }
 ```
 
-<a name="link_context" href="#link_context">#</a> <i>link</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L44 "Source")
+<a name="link_context" href="#link_context">#</a> <i>link</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L44 "Source")
 
-If *context* is specified, sets the context and returns this link generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated link](#_link) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated link is returned. See also [d3-path](https://github.com/d3/d3-path).
+If *context* is specified, sets the context and returns this link generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated link](#_link) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated link is returned. See also [d3-path](https://github.com/xswei/d3-path).
 
-<a name="linkRadial" href="#linkRadial">#</a> d3.<b>linkRadial</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L78 "Source")
+<a name="linkRadial" href="#linkRadial">#</a> d3.<b>linkRadial</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L78 "Source")
 
-Returns a new [link generator](#_link) with radial tangents. For example, to visualize [links](https://github.com/d3/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/d3/d3-hierarchy/blob/master/README.md#tree) rooted in the center of the display, you might say:
+Returns a new [link generator](#_link) with radial tangents. For example, to visualize [links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) rooted in the center of the display, you might say:
 
 ```js
 var link = d3.linkRadial()
@@ -889,11 +889,11 @@ var link = d3.linkRadial()
     .radius(function(d) { return d.y; });
 ```
 
-<a name="linkRadial_angle" href="#linkRadial_angle">#</a> <i>linkRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L80 "Source")
+<a name="linkRadial_angle" href="#linkRadial_angle">#</a> <i>linkRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L80 "Source")
 
 Equivalent to [*link*.x](#link_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
 
-<a name="linkRadial_radius" href="#linkRadial_radius">#</a> <i>linkRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/link/index.js#L81 "Source")
+<a name="linkRadial_radius" href="#linkRadial_radius">#</a> <i>linkRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L81 "Source")
 
 Equivalent to [*link*.y](#link_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
 
@@ -903,15 +903,15 @@ Equivalent to [*link*.y](#link_y), except the accessor returns the radius: the d
 
 Symbols provide a categorical shape encoding as is commonly used in scatterplots. Symbols are always centered at ⟨0,0⟩; use a transform (see: [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations)) to move the symbol to a different position.
 
-<a name="symbol" href="#symbol">#</a> d3.<b>symbol</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol.js "Source")
+<a name="symbol" href="#symbol">#</a> d3.<b>symbol</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js "Source")
 
 Constructs a new symbol generator with the default settings.
 
-<a name="_symbol" href="#_symbol">#</a> <i>symbol</i>(<i>arguments</i>…) [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol.js#L11 "Source")
+<a name="_symbol" href="#_symbol">#</a> <i>symbol</i>(<i>arguments</i>…) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L11 "Source")
 
 Generates a symbol for the given *arguments*. The *arguments* are arbitrary; they are simply propagated to the symbol generator’s accessor functions along with the `this` object. For example, with the default settings, no arguments are needed to produce a circle with area 64 square pixels. If the symbol generator has a [context](#symbol_context), then the symbol is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls and this function returns void. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string is returned.
 
-<a name="symbol_type" href="#symbol_type">#</a> <i>symbol</i>.<b>type</b>([<i>type</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol.js#L33 "Source")
+<a name="symbol_type" href="#symbol_type">#</a> <i>symbol</i>.<b>type</b>([<i>type</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L33 "Source")
 
 If *type* is specified, sets the symbol type to the specified function or symbol type and returns this line generator. If *type* is not specified, returns the current symbol type accessor, which defaults to:
 
@@ -923,7 +923,7 @@ function type() {
 
 See [symbols](#symbols) for the set of built-in symbol types. To implement a custom symbol type, pass an object that implements [*symbolType*.draw](#symbolType_draw).
 
-<a name="symbol_size" href="#symbol_size">#</a> <i>symbol</i>.<b>size</b>([<i>size</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol.js#L37 "Source")
+<a name="symbol_size" href="#symbol_size">#</a> <i>symbol</i>.<b>size</b>([<i>size</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L37 "Source")
 
 If *size* is specified, sets the size to the specified function or number and returns this symbol generator. If *size* is not specified, returns the current size accessor, which defaults to:
 
@@ -935,43 +935,43 @@ function size() {
 
 Specifying the size as a function is useful for constructing a scatterplot with a size encoding. If you wish to scale the symbol to fit a given bounding box, rather than by area, try [SVG’s getBBox](http://bl.ocks.org/mbostock/3dd515e692504c92ab65).
 
-<a name="symbol_context" href="#symbol_context">#</a> <i>symbol</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol.js#L41 "Source")
+<a name="symbol_context" href="#symbol_context">#</a> <i>symbol</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L41 "Source")
 
 If *context* is specified, sets the context and returns this symbol generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated symbol](#_symbol) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated symbol is returned.
 
 <a name="symbols" href="#symbols">#</a> d3.<b>symbols</b>
 
-An array containing the set of all built-in symbol types: [circle](#symbolCircle), [cross](#symbolCross), [diamond](#symbolDiamond), [square](#symbolSquare), [star](#symbolStar), [triangle](#symbolTriangle), and [wye](#symbolWye). Useful for constructing the range of an [ordinal scale](https://github.com/d3/d3-scale#ordinal-scales) should you wish to use a shape encoding for categorical data.
+An array containing the set of all built-in symbol types: [circle](#symbolCircle), [cross](#symbolCross), [diamond](#symbolDiamond), [square](#symbolSquare), [star](#symbolStar), [triangle](#symbolTriangle), and [wye](#symbolWye). Useful for constructing the range of an [ordinal scale](https://github.com/xswei/d3-scale#ordinal-scales) should you wish to use a shape encoding for categorical data.
 
-<a name="symbolCircle" href="#symbolCircle">#</a> d3.<b>symbolCircle</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/circle.js "Source")
+<a name="symbolCircle" href="#symbolCircle">#</a> d3.<b>symbolCircle</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/circle.js "Source")
 
 The circle symbol type.
 
-<a name="symbolCross" href="#symbolCross">#</a> d3.<b>symbolCross</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/cross.js "Source")
+<a name="symbolCross" href="#symbolCross">#</a> d3.<b>symbolCross</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/cross.js "Source")
 
 The Greek cross symbol type, with arms of equal length.
 
-<a name="symbolDiamond" href="#symbolDiamond">#</a> d3.<b>symbolDiamond</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/diamond.js "Source")
+<a name="symbolDiamond" href="#symbolDiamond">#</a> d3.<b>symbolDiamond</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/diamond.js "Source")
 
 The rhombus symbol type.
 
-<a name="symbolSquare" href="#symbolSquare">#</a> d3.<b>symbolSquare</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/square.js "Source")
+<a name="symbolSquare" href="#symbolSquare">#</a> d3.<b>symbolSquare</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/square.js "Source")
 
 The square symbol type.
 
-<a name="symbolStar" href="#symbolStar">#</a> d3.<b>symbolStar</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/star.js "Source")
+<a name="symbolStar" href="#symbolStar">#</a> d3.<b>symbolStar</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/star.js "Source")
 
 The pentagonal star (pentagram) symbol type.
 
-<a name="symbolTriangle" href="#symbolTriangle">#</a> d3.<b>symbolTriangle</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/triangle.js "Source")
+<a name="symbolTriangle" href="#symbolTriangle">#</a> d3.<b>symbolTriangle</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/triangle.js "Source")
 
 The up-pointing triangle symbol type.
 
-<a name="symbolWye" href="#symbolWye">#</a> d3.<b>symbolWye</b> [<源码>](https://github.com/d3/d3-shape/blob/master/src/symbol/wye.js "Source")
+<a name="symbolWye" href="#symbolWye">#</a> d3.<b>symbolWye</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/wye.js "Source")
 
 The Y-shape symbol type.
 
-<a name="pointRadial" href="#pointRadial">#</a> d3.<b>pointRadial</b>(<i>angle</i>, <i>radius</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/pointRadial.js "Source")
+<a name="pointRadial" href="#pointRadial">#</a> d3.<b>pointRadial</b>(<i>angle</i>, <i>radius</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pointRadial.js "Source")
 
 Returns the point [<i>x</i>, <i>y</i>] for the given *angle* in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise, and the given *radius*.
 
@@ -993,11 +993,11 @@ Stacked charts can show overall value and per-category value simultaneously; how
 
 Like the [pie generator](#pies), the stack generator does not produce a shape directly. Instead it computes positions which you can then pass to an [area generator](#areas) or use directly, say to position bars.
 
-<a name="stack" href="#stack">#</a> d3.<b>stack</b>() [<源码>](https://github.com/d3/d3-shape/blob/master/src/stack.js "Source")
+<a name="stack" href="#stack">#</a> d3.<b>stack</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js "Source")
 
 Constructs a new stack generator with the default settings.
 
-<a name="_stack" href="#_stack">#</a> <i>stack</i>(<i>data</i>[, <i>arguments…</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/stack.js#L16 "Source")
+<a name="_stack" href="#_stack">#</a> <i>stack</i>(<i>data</i>[, <i>arguments…</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L16 "Source")
 
 Generates a stack for the given array of *data*, returning an array representing each series. Any additional *arguments* are arbitrary; they are simply propagated to accessors along with the `this` object.
 
@@ -1047,11 +1047,11 @@ The resulting array has one element per *series*. Each series has one point per 
 
 Each series in then typically passed to an [area generator](#areas) to render an area chart, or used to construct rectangles for a bar chart.
 
-<a name="stack_keys" href="#stack_keys">#</a> <i>stack</i>.<b>keys</b>([<i>keys</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/stack.js#L40 "Source")
+<a name="stack_keys" href="#stack_keys">#</a> <i>stack</i>.<b>keys</b>([<i>keys</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L40 "Source")
 
 If *keys* is specified, sets the keys accessor to the specified function or array and returns this stack generator. If *keys* is not specified, returns the current keys accessor, which defaults to the empty array. A series (layer) is [generated](#_stack) for each key. Keys are typically strings, but they may be arbitrary values. The series’ key is passed to the [value accessor](#stack_value), along with each data point, to compute the point’s value.
 
-<a name="stack_value" href="#stack_value">#</a> <i>stack</i>.<b>value</b>([<i>value</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/stack.js#L44 "Source")
+<a name="stack_value" href="#stack_value">#</a> <i>stack</i>.<b>value</b>([<i>value</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L44 "Source")
 
 If *value* is specified, sets the value accessor to the specified function or number and returns this stack generator. If *value* is not specified, returns the current value accessor, which defaults to:
 
@@ -1063,7 +1063,7 @@ function value(d, key) {
 
 Thus, by default the stack generator assumes that the input data is an array of objects, with each object exposing named properties with numeric values; see [*stack*](#_stack) for an example.
 
-<a name="stack_order" href="#stack_order">#</a> <i>stack</i>.<b>order</b>([<i>order</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/stack.js#L48 "Source")
+<a name="stack_order" href="#stack_order">#</a> <i>stack</i>.<b>order</b>([<i>order</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L48 "Source")
 
 If *order* is specified, sets the order accessor to the specified function or array and returns this stack generator. If *order* is not specified, returns the current order acccesor, which defaults to [stackOrderNone](#stackOrderNone); this uses the order given by the [key accessor](#stack_key). See [stack orders](#stack-orders) for the built-in orders.
 
@@ -1079,7 +1079,7 @@ function orderNone(series) {
 
 The stack order is computed prior to the [offset](#stack_offset); thus, the lower value for all points is zero at the time the order is computed. The index attribute for each series is also not set until after the order is computed.
 
-<a name="stack_offset" href="#stack_offset">#</a> <i>stack</i>.<b>offset</b>([<i>offset</i>]) [<源码>](https://github.com/d3/d3-shape/blob/master/src/stack.js#L52 "Source")
+<a name="stack_offset" href="#stack_offset">#</a> <i>stack</i>.<b>offset</b>([<i>offset</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L52 "Source")
 
 If *offset* is specified, sets the offset accessor to the specified function or array and returns this stack generator. If *offset* is not specified, returns the current offset acccesor, which defaults to [stackOffsetNone](#stackOffsetNone); this uses a zero baseline. See [stack offsets](#stack-offsets) for the built-in offsets.
 
@@ -1101,23 +1101,23 @@ function offsetNone(series, order) {
 
 Stack orders are typically not used directly, but are instead passed to [*stack*.order](#stack_order).
 
-<a name="stackOrderAscending" href="#stackOrderAscending">#</a> d3.<b>stackOrderAscending</b>(<i>series</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/order/ascending.js "Source")
+<a name="stackOrderAscending" href="#stackOrderAscending">#</a> d3.<b>stackOrderAscending</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/ascending.js "Source")
 
 Returns a series order such that the smallest series (according to the sum of values) is at the bottom.
 
-<a name="stackOrderDescending" href="#stackOrderDescending">#</a> d3.<b>stackOrderDescending</b>(<i>series</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/order/descending.js "Source")
+<a name="stackOrderDescending" href="#stackOrderDescending">#</a> d3.<b>stackOrderDescending</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/descending.js "Source")
 
 Returns a series order such that the largest series (according to the sum of values) is at the bottom.
 
-<a name="stackOrderInsideOut" href="#stackOrderInsideOut">#</a> d3.<b>stackOrderInsideOut</b>(<i>series</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/order/insideOut.js "Source")
+<a name="stackOrderInsideOut" href="#stackOrderInsideOut">#</a> d3.<b>stackOrderInsideOut</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/insideOut.js "Source")
 
 Returns a series order such that the larger series (according to the sum of values) are on the inside and the smaller series are on the outside. This order is recommended for streamgraphs in conjunction with the [wiggle offset](#stackOffsetWiggle). See [Stacked Graphs—Geometry & Aesthetics](http://leebyron.com/streamgraph/) by Byron & Wattenberg for more information.
 
-<a name="stackOrderNone" href="#stackOrderNone">#</a> d3.<b>stackOrderNone</b>(<i>series</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/order/none.js "Source")
+<a name="stackOrderNone" href="#stackOrderNone">#</a> d3.<b>stackOrderNone</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/none.js "Source")
 
 Returns the given series order [0, 1, … *n* - 1] where *n* is the number of elements in *series*. Thus, the stack order is given by the [key accessor](#stack_keys).
 
-<a name="stackOrderReverse" href="#stackOrderReverse">#</a> d3.<b>stackOrderReverse</b>(<i>series</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/order/reverse.js "Source")
+<a name="stackOrderReverse" href="#stackOrderReverse">#</a> d3.<b>stackOrderReverse</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/reverse.js "Source")
 
 Returns the reverse of the given series order [*n* - 1, *n* - 2, … 0] where *n* is the number of elements in *series*. Thus, the stack order is given by the reverse of the [key accessor](#stack_keys).
 
@@ -1125,22 +1125,22 @@ Returns the reverse of the given series order [*n* - 1, *n* - 2, … 0] where *n
 
 Stack offsets are typically not used directly, but are instead passed to [*stack*.offset](#stack_offset).
 
-<a name="stackOffsetExpand" href="#stackOffsetExpand">#</a> d3.<b>stackOffsetExpand</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/offset/expand.js "Source")
+<a name="stackOffsetExpand" href="#stackOffsetExpand">#</a> d3.<b>stackOffsetExpand</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/expand.js "Source")
 
 Applies a zero baseline and normalizes the values for each point such that the topline is always one.
 
-<a name="stackOffsetDiverging" href="#stackOffsetDiverging">#</a> d3.<b>stackOffsetDiverging</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/offset/diverging.js "Source")
+<a name="stackOffsetDiverging" href="#stackOffsetDiverging">#</a> d3.<b>stackOffsetDiverging</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/diverging.js "Source")
 
 Positive values are stacked above zero, while negative values are [stacked below zero](https://bl.ocks.org/mbostock/b5935342c6d21928111928401e2c8608).
 
-<a name="stackOffsetNone" href="#stackOffsetNone">#</a> d3.<b>stackOffsetNone</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/offset/none.js "Source")
+<a name="stackOffsetNone" href="#stackOffsetNone">#</a> d3.<b>stackOffsetNone</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/none.js "Source")
 
 Applies a zero baseline.
 
-<a name="stackOffsetSilhouette" href="#stackOffsetSilhouette">#</a> d3.<b>stackOffsetSilhouette</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/offset/silhouette.js "Source")
+<a name="stackOffsetSilhouette" href="#stackOffsetSilhouette">#</a> d3.<b>stackOffsetSilhouette</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/silhouette.js "Source")
 
 Shifts the baseline down such that the center of the streamgraph is always at zero.
 
-<a name="stackOffsetWiggle" href="#stackOffsetWiggle">#</a> d3.<b>stackOffsetWiggle</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/d3/d3-shape/blob/master/src/offset/wiggle.js "Source")
+<a name="stackOffsetWiggle" href="#stackOffsetWiggle">#</a> d3.<b>stackOffsetWiggle</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/wiggle.js "Source")
 
 Shifts the baseline so as to minimize the weighted wiggle of layers. This offset is recommended for streamgraphs in conjunction with the [inside-out order](#stackOrderInsideOut). See [Stacked Graphs—Geometry & Aesthetics](http://leebyron.com/streamgraph/) by Bryon & Wattenberg for more information.
