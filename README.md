@@ -192,7 +192,7 @@ If *radius* is specified, sets the pad radius to the specified function or numbe
 
 <a name="arc_context" href="#arc_context">#</a> <i>arc</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L258 "Source")
 
-If *context* is specified, sets the context and returns this arc generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated arc](#_arc) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated arc is returned.
+如果指定了 *context* 则设置渲染上下文并返回 `arc` 生成器。如果 *context* 没有指定则返回当前的上下文，默认为 `null`。如果上下文非空，则 [generated arc](#_arc) 会被渲染到指定的上下文。否则会返回一个表示 `arc` 的 [path data](http://www.w3.org/TR/SVG/paths.html#PathData) 字符串。
 
 ### Pies
 
