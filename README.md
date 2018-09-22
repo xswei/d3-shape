@@ -176,19 +176,19 @@ function padAngle() {
 }
 ```
 
-The pad angle is converted to a fixed linear distance separating adjacent arcs, defined as [padRadius](#arc_padRadius) * padAngle. This distance is subtracted equally from the [start](#arc_startAngle) and [end](#arc_endAngle) of the arc. If the arc forms a complete circle or annulus, as when |endAngle - startAngle| ≥ τ, the pad angle is ignored.
+间隔角度会转换为一个在两个相邻的弧之间的确定的线性距离，定义为 [padRadius](#arc_padRadius) * padAngle，这个距离在弧的开始和结束处都是相等的。如果弧形成一个完整的圆或环，也就是 |endAngle - startAngle| ≥ τ, 则间隔角度会被忽略。
 
-If the [inner radius](#arc_innerRadius) or angular span is small relative to the pad angle, it may not be possible to maintain parallel edges between adjacent arcs. In this case, the inner edge of the arc may collapse to a point, similar to a circular sector. For this reason, padding is typically only applied to annular sectors (*i.e.*, when innerRadius is positive), as shown in this diagram:
+如果 [inner radius](#arc_innerRadius) 或扇(环)形状的角跨度相对于间隔角度很小，则在相邻的弧之间保持平行的边缘是不可能的。在这种情况下，弧的内边缘可能会靠近成一个点，类似于一个圆形的扇形区域。由于这个原因，间隔角度通常只应用于环形扇区（即当内半径大于 `0`），如图所示：
 
 [<img alt="Padded Circular Sectors" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/padded-circular-sector.png" width="250" height="250">](http://bl.ocks.org/mbostock/f37b07b92633781a46f7)[<img alt="Padded Annular Sectors" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/padded-annular-sector.png" width="250" height="250">](http://bl.ocks.org/mbostock/99f0a6533f7c949cf8b8)
 
-The recommended minimum inner radius when using padding is outerRadius \* padAngle / sin(θ), where θ is the angular span of the smallest arc before padding. For example, if the outer radius is 200 pixels and the pad angle is 0.02 radians, a reasonable θ is 0.04 radians, and a reasonable inner radius is 100 pixels. See the [arc padding animation](http://bl.ocks.org/mbostock/053fcc2295a445afab07) for illustration.
+使用角度间隔时，推荐的角度间隔为 `outerRadius \* padAngle / sin(θ)`，其中 `θ` 是所有扇(环)形中角度跨度最小的角度值。例如，如果外半径为 `200` 像素，间隔角度为 `0.02` 弧度，则合理的 `θ` 为 `0.04`，合理的内半径为 `100` 像素。参考[arc padding animation](http://bl.ocks.org/mbostock/053fcc2295a445afab07).
 
-Often, the pad angle is not set directly on the arc generator, but is instead computed by the [pie generator](#pies) so as to ensure that the area of padded arcs is proportional to their value; see [*pie*.padAngle](#pie_padAngle). See the [pie padding animation](http://bl.ocks.org/mbostock/3e961b4c97a1b543fff2) for illustration. If you apply a constant pad angle to the arc generator directly, it tends to subtract disproportionately from smaller arcs, introducing distortion.
+通常情况下，间隔角度不会在 `arc` 生成器中直接设置，而是通过 [pie generator](#pies) 来计算出一个与具体数据相比合理的间隔角度；参考 [*pie*.padAngle](#pie_padAngle) 和 [pie padding animation](http://bl.ocks.org/mbostock/3e961b4c97a1b543fff2). 如果你使用了一个常量表示间隔角度，则它会倾向于从较小的弧跨度中减去不成比例的，可能会失真.
 
 <a name="arc_padRadius" href="#arc_padRadius">#</a> <i>arc</i>.<b>padRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L242 "Source")
 
-If *radius* is specified, sets the pad radius to the specified function or number and returns this arc generator. If *radius* is not specified, returns the current pad radius accessor, which defaults to null, indicating that the pad radius should be automatically computed as sqrt([innerRadius](#arc_innerRadius) * innerRadius + [outerRadius](#arc_outerRadius) * outerRadius). The pad radius determines the fixed linear distance separating adjacent arcs, defined as padRadius * [padAngle](#arc_padAngle).
+如果指定了 *radius* 则将间隔半径设置为指定的函数或数值并返回 `arc` 生成器。如果没有指定 `radius` 则返回当前的间隔半径访问器，默认为 `null`，此时间隔半径通过 `sqrt([innerRadius](#arc_innerRadius) * innerRadius + [outerRadius](#arc_outerRadius) * outerRadius)` 自动计算。间隔半径决定将两个相邻的扇(环)形分开的固定距离，定义为 `padRadius * [padAngle](#arc_padAngle)`.
 
 <a name="arc_context" href="#arc_context">#</a> <i>arc</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/arc.js#L258 "Source")
 
