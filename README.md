@@ -196,33 +196,33 @@ If *radius* is specified, sets the pad radius to the specified function or numbe
 
 ### Pies
 
-The pie generator does not produce a shape directly, but instead computes the necessary angles to represent a tabular dataset as a pie or donut chart; these angles can then be passed to an [arc generator](#arcs).
+`pie` 生成器不会直接生成图形，但是会计算生成饼图或环形图所需要的角度信息，这些角度信息可以被传递给 [arc generator](#arcs)。
 
 <a name="pie" href="#pie">#</a> d3.<b>pie</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js "Source")
 
-Constructs a new pie generator with the default settings.
+构建一个新的使用默认配置的 `pie` 生成器。
 
 <a name="_pie" href="#_pie">#</a> <i>pie</i>(<i>data</i>[, <i>arguments…</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L14 "Source")
 
-Generates a pie for the given array of *data*, returning an array of objects representing each datum’s arc angles. Any additional *arguments* are arbitrary; they are simply propagated to the pie generator’s accessor functions along with the `this` object. The length of the returned array is the same as *data*, and each element *i* in the returned array corresponds to the element *i* in the input data. Each object in the returned array has the following properties:
+根据指定的 *data* 数组生成一组对象数组，其中每个对象包含每个传入的数据经过计算后的角度信息。可以包含其他的额外 *argements*，这些额外的参数会直接被传递给当前数据计算后生成的对象或饼图生成器的访问器。返回数组的长度与 *data* 长度一致，其中第 *i* 个元素与输入数据中的第 *i* 个元素对应。返回数组中的每个对象包含以下属性:
 
-* `data` - the input datum; the corresponding element in the input data array.
-* `value` - the numeric [value](#pie_value) of the arc.
-* `index` - the zero-based [sorted index](#pie_sort) of the arc.
-* `startAngle` - the [start angle](#pie_startAngle) of the arc.
-* `endAngle` - the [end angle](#pie_endAngle) of the arc.
-* `padAngle` - the [pad angle](#pie_padAngle) of the arc.
+* `data` - 输入数据; 对应输入数组中的数据元素.
+* `value` - `arc` 对应的 [value](#pie_value).
+* `index` - `arc` 基于 `0` 的 [sorted index(排序后的索引)](#pie_sort).
+* `startAngle` - `arc` 的 [start angle](#pie_startAngle).
+* `endAngle` - `arc` 的 [end angle](#pie_endAngle).
+* `padAngle` - `arc` 的 [pad angle](#pie_padAngle).
 
-This representation is designed to work with the arc generator’s default [startAngle](#arc_startAngle), [endAngle](#arc_endAngle) and [padAngle](#arc_padAngle) accessors. The angular units are arbitrary, but if you plan to use the pie generator in conjunction with an [arc generator](#arcs), you should specify angles in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise.
+这种形式的设计可以兼容 `arc` 生成器的默认 [startAngle](#arc_startAngle), [endAngle](#arc_endAngle) 和 [padAngle](#arc_padAngle) 访问器。角度单位是任意的，但是如果你想将饼图生成器和 `arc` 生成器结合使用，则应该以弧度的形式指定角度值，其中 `12` 点钟方向为 `0` 度并且顺时针方向为正。
 
-Given a small dataset of numbers, here is how to compute the arc angles to render this data as a pie chart:
+给定一个小数据集，下面为如何计算其每个数据的角度信息:
 
 ```js
 var data = [1, 1, 2, 3, 5, 8, 13, 21];
 var arcs = d3.pie()(data);
 ```
 
-The first pair of parens, `pie()`, [constructs](#pie) a default pie generator. The second, `pie()(data)`, [invokes](#_pie) this generator on the dataset, returning an array of objects:
+`pie()` [constructs(构造)](#pie) 一个默认的 `pie` 生成器。`pie()(data)` 为指定的数据集 [invokes(调用)](#_pie) 饼图生成器，返回一组对象数组:
 
 ```json
 [
@@ -237,11 +237,11 @@ The first pair of parens, `pie()`, [constructs](#pie) a default pie generator. T
 ]
 ```
 
-Note that the returned array is in the same order as the data, even though this pie chart is [sorted](#pie_sortValues) by descending value, starting with the arc for the last datum (value 21) at 12 o’clock.
+需要注意的是，返回的数组与传入的数据集的次序是一致的，无论数据元素的值大小。
 
 <a name="pie_value" href="#pie_value">#</a> <i>pie</i>.<b>value</b>([<i>value</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L54 "Source")
 
-If *value* is specified, sets the value accessor to the specified function or number and returns this pie generator. If *value* is not specified, returns the current value accessor, which defaults to:
+如果指定了 *value* 则设置当前饼图生成器的值访问器为指定的函数或数值，并返回当前饼图生成器。如果没有指定 *value* 则返回当前的值访问器默认为:
 
 ```js
 function value(d) {
@@ -249,7 +249,7 @@ function value(d) {
 }
 ```
 
-When a pie is [generated](#_pie), the value accessor will be invoked for each element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default value accessor assumes that the input data are numbers, or that they are coercible to numbers using [valueOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf). If your data are not simply numbers, then you should specify an accessor that returns the corresponding numeric value for a given datum. For example:
+当生成饼图时，值访问器会为传入的数据的每个元素调用并传递当前数据元素 *d*, 索引 `i` 以及当前数组 `data` 三个参数。默认的值访问器假设传入的数据每个元素为数值类型，或者可以使用 [valueOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf) 转为数值类型的值。如果你的数据不是简单的数值，你应该指定一个返回数值类型的值访问器。例如:
 
 ```js
 var data = [
@@ -266,29 +266,29 @@ var arcs = d3.pie()
     (data);
 ```
 
-This is similar to [mapping](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) your data to values before invoking the pie generator:
+这与 [mapping](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) 类似，在调用饼图生成器之前，对数据进行预处理:
 
 ```js
 var arcs = d3.pie()(data.map(function(d) { return d.number; }));
 ```
 
-The benefit of an accessor is that the input data remains associated with the returned objects, thereby making it easier to access other fields of the data, for example to set the color or to add text labels.
+访问器的好处是输入数据仍然与返回的对象相关联，从而使访问数据的其他字段变得更容易，例如设置颜色或添加文本标签。
 
 <a name="pie_sort" href="#pie_sort">#</a> <i>pie</i>.<b>sort</b>([<i>compare</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L62 "Source")
 
-If *compare* is specified, sets the data comparator to the specified function and returns this pie generator. If *compare* is not specified, returns the current data comparator, which defaults to null. If both the data comparator and the value comparator are null, then arcs are positioned in the original input order. Otherwise, the data is sorted according to the data comparator, and the resulting order is used. Setting the data comparator implicitly sets the [value comparator](#pie_sortValues) to null.
+如果指定了 *compare* 则将数据比较函数设置为指定的函数并返回饼图生成器。如果没有指定 *compare* 则返回当前的数据对比函数，默认为 `null`。如果数据比较函数和值比较函数都为 `null` 则返回的 `arc` 会保持数据的次序。否则，返回的结果会安装相应的比较函数进行排序。设置数据对比函数默认会将 [value comparator(值比较函数)](#pie_sortValues) 设置为 `null`。
 
-The *compare* function takes two arguments *a* and *b*, each elements from the input data array. If the arc for *a* should be before the arc for *b*, then the comparator must return a number less than zero; if the arc for *a* should be after the arc for *b*, then the comparator must return a number greater than zero; returning zero means that the relative order of *a* and *b* is unspecified. For example, to sort arcs by their associated name:
+*compare* 函数会传递两个参数 *a* 和 *b*, 每个元素都来自输入数据。如果数据 *a* 对应的扇形在 *b* 前面，则比较函数应该返回小于 `0` 的值; 如果 *a* 对应的扇形在 *b* 的后面则比较函数应返回大于 `0` 的值;返回 `0` 表示 *a* 和 *b* 的相对位置不做任何调整。例如根据 `name` 对生成的扇形数组进行排序:
 
 ```js
 pie.sort(function(a, b) { return a.name.localeCompare(b.name); });
 ```
 
-Sorting does not affect the order of the [generated arc array](#_pie) which is always in the same order as the input data array; it merely affects the computed angles of each arc. The first arc starts at the [start angle](#pie_startAngle) and the last arc ends at the [end angle](#pie_endAngle).
+排序操作不会影响 [generated arc array(生成的数组次序)](#_pie), 生成的数据次序与传入的数组次序保持一致。排序操作是通过修改每个生成的元素的起始角度值来实现排序的。
 
 <a name="pie_sortValues" href="#pie_sortValues">#</a> <i>pie</i>.<b>sortValues</b>([<i>compare</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L58 "Source")
 
-If *compare* is specified, sets the value comparator to the specified function and returns this pie generator. If *compare* is not specified, returns the current value comparator, which defaults to descending value. The default value comparator is implemented as:
+如果指定了 *compare* 则将 `value` 比较函数设置为指定的函数并返回当前的饼图生成器。如果没有指定 *compare* 则返回当前的值比较函数，默认为降序。默认的值比较函数实现形式为:
 
 ```js
 function compare(a, b) {
@@ -296,19 +296,19 @@ function compare(a, b) {
 }
 ```
 
-If both the data comparator and the value comparator are null, then arcs are positioned in the original input order. Otherwise, the data is sorted according to the data comparator, and the resulting order is used. Setting the value comparator implicitly sets the [data comparator](#pie_sort) to null.
+如果数据比较函数和值比较函数都为 `null` 则生成的数组次序与输入数据的次序保持一致。否则，数据会按照数据比较函数进行排序。设置值比较函数默认将 [data comparator](#pie_sort) 设置为 `null`.
 
-The value comparator is similar to the [data comparator](#pie_sort), except the two arguments *a* and *b* are values derived from the input data array using the [value accessor](#pie_value), not the data elements. If the arc for *a* should be before the arc for *b*, then the comparator must return a number less than zero; if the arc for *a* should be after the arc for *b*, then the comparator must return a number greater than zero; returning zero means that the relative order of *a* and *b* is unspecified. For example, to sort arcs by ascending value:
+值比较函数与 [data comparator](#pie_sort) 类似，只不过两个参数 *a* 和 *b* 是经过 [value accessor](#pie_value) 计算之后的值，而不是原始的数据元素。如果 *a* 应该在 *b* 前则返回小于 `0` 的值，如果 *a* 应该在 *b* 后面则返回大于 `0` 的值。返回 `0` 表示 *a* 和 *b* 的相对位置不改变。例如根据值进行排序:
 
 ```js
 pie.sortValues(function(a, b) { return a - b; });
 ```
 
-Sorting does not affect the order of the [generated arc array](#_pie) which is always in the same order as the input data array; it merely affects the computed angles of each arc. The first arc starts at the [start angle](#pie_startAngle) and the last arc ends at the [end angle](#pie_endAngle).
+排序操作不会影响 [generated arc array(生成的数组次序)](#_pie), 生成的数据次序与传入的数组次序保持一致。排序操作是通过修改每个生成的元素的起始角度值来实现排序的。
 
 <a name="pie_startAngle" href="#pie_startAngle">#</a> <i>pie</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L66 "Source")
 
-If *angle* is specified, sets the overall start angle of the pie to the specified function or number and returns this pie generator. If *angle* is not specified, returns the current start angle accessor, which defaults to:
+如果指定了 *angle* 则将饼图的布局起始角度设置为指定的函数或数值并返回饼图生成器。如果没有指定则返回当前起始角度访问器默认为:
 
 ```js
 function startAngle() {
@@ -316,11 +316,11 @@ function startAngle() {
 }
 ```
 
-The start angle here means the *overall* start angle of the pie, *i.e.*, the start angle of the first arc. The start angle accessor is invoked once, being passed the same arguments and `this` context as the [pie generator](#_pie). The units of *angle* are arbitrary, but if you plan to use the pie generator in conjunction with an [arc generator](#arcs), you should specify an angle in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise.
+起始角度是整个饼图的开始角度，也就是第一个扇区的开始角度。起始角度访问器只会调用一次，并传递当前数据为参数，其中 `this` 指向 [pie generator](#_pie)。*angle* 的单位是任意的，但是如果要将饼图生成器与弧生成器结合使用则应该以弧度指定，`12点钟` 方向为 `0` 度方向，并且顺时针为正。
 
 <a name="pie_endAngle" href="#pie_endAngle">#</a> <i>pie</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L70 "Source")
 
-If *angle* is specified, sets the overall end angle of the pie to the specified function or number and returns this pie generator. If *angle* is not specified, returns the current end angle accessor, which defaults to:
+如果指定了 *angle* 则将整个饼图的终止角度设置为指定的函数或数值并返回当前饼图生成器。如果没有指定 *angle* 则返回当前的终止角度访问器。默认为:
 
 ```js
 function endAngle() {
@@ -328,13 +328,14 @@ function endAngle() {
 }
 ```
 
-The end angle here means the *overall* end angle of the pie, *i.e.*, the end angle of the last arc. The end angle accessor is invoked once, being passed the same arguments and `this` context as the [pie generator](#_pie). The units of *angle* are arbitrary, but if you plan to use the pie generator in conjunction with an [arc generator](#arcs), you should specify an angle in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise.
+终止角度也就是整个饼图的结束角度，即最后一个扇区的终止角度。终止角度访问器会被调用一次病传递当前数据，其中 `this` 指向 
+[pie generator](#_pie)，角度的单位是任意的，但是如果要将饼图生成器与弧生成器结合使用则应该以弧度指定，`12点钟` 方向为 `0` 度方向，并且顺时针为正。
 
-The value of the end angle is constrained to [startAngle](#pie_startAngle) ± τ, such that |endAngle - startAngle| ≤ τ.
+终止角度可以被设置为 [startAngle](#pie_startAngle) ± τ，这样就能保证 |endAngle - startAngle| ≤ τ.
 
 <a name="pie_padAngle" href="#pie_padAngle">#</a> <i>pie</i>.<b>padAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pie.js#L74 "Source")
 
-If *angle* is specified, sets the pad angle to the specified function or number and returns this pie generator. If *angle* is not specified, returns the current pad angle accessor, which defaults to:
+如果指定了 *angle* 则将饼图扇形之间的间隔设置为指定的函数或数值，并返回当前饼图生成器。如果没有指定 *angle* 则返回当前默认的间隔角度访问器，默认为:
 
 ```js
 function padAngle() {
@@ -342,7 +343,7 @@ function padAngle() {
 }
 ```
 
-The pad angle here means the angular separation between each adjacent arc. The total amount of padding reserved is the specified *angle* times the number of elements in the input data array, and at most |endAngle - startAngle|; the remaining space is then divided proportionally by [value](#pie_value) such that the relative area of each arc is preserved. See the [pie padding animation](http://bl.ocks.org/mbostock/3e961b4c97a1b543fff2) for illustration. The pad angle accessor is invoked once, being passed the same arguments and `this` context as the [pie generator](#_pie). The units of *angle* are arbitrary, but if you plan to use the pie generator in conjunction with an [arc generator](#arcs), you should specify an angle in radians.
+这里的间隔角度也就是两个相邻的扇形之间的间隔。间隔角度的总和等于指定的角度乘以输入数据数组中的元素数量，最大为 |endAngle - startAngle|；然后，剩余的间隔按比例按比例分配，这样每个弧的相对面积就会被保留下来。参考 [pie padding animation](http://bl.ocks.org/mbostock/3e961b4c97a1b543fff2) 获取更详细的说明。间隔访问器只会被调用一次，并传递当前数据集，其中 `this` 上下文指向 [pie generator](#_pie)。角度的单位是任意的，但是如果要将饼图生成器与弧生成器结合使用则应该以弧度指定。
 
 ### Lines
 
