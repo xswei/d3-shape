@@ -577,60 +577,60 @@ function defined() {
 
 <img alt="Radial Area" width="250" height="250" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/area-radial.png">
 
-Constructs a new radial area generator with the default settings. A radial area generator is equivalent to the standard Cartesian [area generator](#area), except the [x](#area_x) and [y](#area_y) accessors are replaced with [angle](#areaRadial_angle) and [radius](#areaRadial_radius) accessors. Radial areas are always positioned relative to ⟨0,0⟩; use a transform (see: [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations)) to change the origin.
+使用默认的设置构造一个新的径向区域生成器。径向区域生成器类似于标准的笛卡尔坐标系下的 [area generator](#area) 只不过 [x](#area_x) 和 [y](#area_y) 访问器被替换为 [angle](#areaRadial_angle) 和 [radius](#areaRadial_radius) 访问器。径向区域图总是相对于 ⟨0,0⟩。你可以使用坐标变换将其平移到指定的位置。参考 [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations) 的坐标变换。
 
 <a name="_areaRadial" href="#_areaRadial">#</a> <i>areaRadial</i>(<i>data</i>)
 
-Equivalent to [*area*](#_area).
+等价于 [*area*](#_area).
 
 <a name="areaRadial_angle" href="#areaRadial_angle">#</a> <i>areaRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L13 "Source")
 
-Equivalent to [*area*.x](#area_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
+等价于 [*area*.x](#area_x), 只不过返回值为弧度，其中 `0` 度位于 -*y* (12 点钟方向).
 
 <a name="areaRadial_startAngle" href="#areaRadial_startAngle">#</a> <i>areaRadial</i>.<b>startAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L14 "Source")
 
-Equivalent to [*area*.x0](#area_x0), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock). Note: typically [angle](#areaRadial_angle) is used instead of setting separate start and end angles.
+等价于 [*area*.x0](#area_x0), 只不过访问器返回弧度值，其中`0` 度位于 -*y* (12 点钟方向). 注意：通常使用角度，而不是设置单独的起始和结束角。
 
 <a name="areaRadial_endAngle" href="#areaRadial_endAngle">#</a> <i>areaRadial</i>.<b>endAngle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L15 "Source")
 
-Equivalent to [*area*.x1](#area_x1), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock). Note: typically [angle](#areaRadial_angle) is used instead of setting separate start and end angles.
+等价于 [*area*.x1](#area_x1), 只不过访问器返回弧度值，其中`0` 度位于 -*y* (12 点钟方向). 注意：通常使用角度，而不是设置单独的起始和结束角。
 
 <a name="areaRadial_radius" href="#areaRadial_radius">#</a> <i>areaRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L16 "Source")
 
-Equivalent to [*area*.y](#area_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
+等价于 [*area*.y](#area_y), 只不过访问器返回的是距离 ⟨0,0⟩ 的距离。
 
 <a name="areaRadial_innerRadius" href="#areaRadial_innerRadius">#</a> <i>areaRadial</i>.<b>innerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L17 "Source")
 
-Equivalent to [*area*.y0](#area_y0), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
+等价于 [*area*.y0](#area_y0), 只不过访问器返回的是距离 ⟨0,0⟩ 的距离。
 
 <a name="areaRadial_outerRadius" href="#areaRadial_outerRadius">#</a> <i>areaRadial</i>.<b>outerRadius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L18 "Source")
 
-Equivalent to [*area*.y1](#area_y1), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
+等价于 [*area*.y1](#area_y1), 只不过访问器返回的是距离 ⟨0,0⟩ 的距离。
 
 <a name="areaRadial_defined" href="#areaRadial_defined">#</a> <i>areaRadial</i>.<b>defined</b>([<i>defined</i>])
 
-Equivalent to [*area*.defined](#area_defined).
+等价于 [*area*.defined](#area_defined).
 
 <a name="areaRadial_curve" href="#areaRadial_curve">#</a> <i>areaRadial</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L24 "Source")
 
-Equivalent to [*area*.curve](#area_curve). Note that [curveMonotoneX](#curveMonotoneX) or [curveMonotoneY](#curveMonotoneY) are not recommended for radial areas because they assume that the data is monotonic in *x* or *y*, which is typically untrue of radial areas.
+等价于 [*area*.curve](#area_curve). 注意不推荐使用 [curveMonotoneX](#curveMonotoneX) 或 [curveMonotoneY](#curveMonotoneY) 因为这两种曲线假设 *x* 或 *y* 维度是单调的, 不适合用于径向区域图.
 
 <a name="areaRadial_context" href="#areaRadial_context">#</a> <i>areaRadial</i>.<b>context</b>([<i>context</i>])
 
-Equivalent to [*line*.context](#line_context).
+等价于 [*line*.context](#line_context).
 
 <a name="areaRadial_lineStartAngle" href="#areaRadial_lineStartAngle">#</a> <i>areaRadial</i>.<b>lineStartAngle</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L19 "Source")
 <br><a name="areaRadial_lineInnerRadius" href="#areaRadial_lineInnerRadius">#</a> <i>areaRadial</i>.<b>lineInnerRadius</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L21 "Source")
 
-Returns a new [radial line generator](#lineRadial) that has this radial area generator’s current [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) and [context](#areaRadial_context). The line’s [angle accessor](#lineRadial_angle) is this area’s [start angle accessor](#areaRadial_startAngle), and the line’s [radius accessor](#lineRadial_radius) is this area’s [inner radius accessor](#areaRadial_innerRadius).
+返回一个新的 [radial line generator](#lineRadial)，内置当前径向区域图的 [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) 和 [context](#areaRadial_context)。线条的 [angle accessor](#lineRadial_angle) 为区域图的 [start angle accessor](#areaRadial_startAngle), 线条的 [radius accessor](#lineRadial_radius) 为区域图的 [inner radius accessor](#areaRadial_innerRadius).
 
 <a name="areaRadial_lineEndAngle" href="#areaRadial_lineEndAngle">#</a> <i>areaRadial</i>.<b>lineEndAngle</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L20 "Source")
 
-Returns a new [radial line generator](#lineRadial) that has this radial area generator’s current [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) and [context](#areaRadial_context). The line’s [angle accessor](#lineRadial_angle) is this area’s [end angle accessor](#areaRadial_endAngle), and the line’s [radius accessor](#lineRadial_radius) is this area’s [inner radius accessor](#areaRadial_innerRadius).
+返回一个新的 [radial line generator](#lineRadial)，内置区域图的 [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) 和 [context](#areaRadial_context)。线条的 [angle accessor](#lineRadial_angle) 为区域图的 [end angle accessor](#areaRadial_endAngle), 线条的 [radius accessor](#lineRadial_radius) 为区域图的 [inner radius accessor](#areaRadial_innerRadius).
 
 <a name="areaRadial_lineOuterRadius" href="#areaRadial_lineOuterRadius">#</a> <i>areaRadial</i>.<b>lineOuterRadius</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/areaRadial.js#L22 "Source")
 
-Returns a new [radial line generator](#lineRadial) that has this radial area generator’s current [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) and [context](#areaRadial_context). The line’s [angle accessor](#lineRadial_angle) is this area’s [start angle accessor](#areaRadial_startAngle), and the line’s [radius accessor](#lineRadial_radius) is this area’s [outer radius accessor](#areaRadial_outerRadius).
+返回一个新的 [radial line generator](#lineRadial)，内置区域图的 [defined accessor](#areaRadial_defined), [curve](#areaRadial_curve) 和 [context](#areaRadial_context). 线条的 [angle accessor](#lineRadial_angle) 为区域图的 [start angle accessor](#areaRadial_startAngle), 线条的 [radius accessor](#lineRadial_radius) 为区域图的 [outer radius accessor](#areaRadial_outerRadius).
 
 ### Curves
 
@@ -697,7 +697,7 @@ Produces a cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_s
 
 <a name="curveCardinal_tension" href="#curveCardinal_tension">#</a> <i>cardinal</i>.<b>tension</b>(<i>tension</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalOpen.js#L44 "Source")
 
-Returns a cardinal curve with the specified *tension* in the range [0, 1]. The *tension* determines the length of the tangents: a *tension* of one yields all zero tangents, equivalent to [curveLinear](#curveLinear); a *tension* of zero produces a uniform [Catmull–Rom](#curveCatmullRom) spline. For example:
+Returns a cardinal curve with the specified *tension* in the range [0, 1]. The *tension* determines the length of the tangents: a *tension* of one yields all zero tangents, 等价于 [curveLinear](#curveLinear); a *tension* of zero produces a uniform [Catmull–Rom](#curveCatmullRom) spline. For example:
 
 ```js
 var line = d3.line().curve(d3.curveCardinal.tension(0.5));
@@ -723,7 +723,7 @@ Produces a cubic Catmull–Rom spline using the specified control points and the
 
 <a name="curveCatmullRom_alpha" href="#curveCatmullRom_alpha">#</a> <i>catmullRom</i>.<b>alpha</b>(<i>alpha</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRom.js#L83 "Source")
 
-Returns a cubic Catmull–Rom curve with the specified *alpha* in the range [0, 1]. If *alpha* is zero, produces a uniform spline, equivalent to [curveCardinal](#curveCardinal) with a tension of zero; if *alpha* is one, produces a chordal spline; if *alpha* is 0.5, produces a [centripetal spline](https://en.wikipedia.org/wiki/Centripetal_Catmull–Rom_spline). Centripetal splines are recommended to avoid self-intersections and overshoot. For example:
+Returns a cubic Catmull–Rom curve with the specified *alpha* in the range [0, 1]. If *alpha* is zero, produces a uniform spline, 等价于 [curveCardinal](#curveCardinal) with a tension of zero; if *alpha* is one, produces a chordal spline; if *alpha* is 0.5, produces a [centripetal spline](https://en.wikipedia.org/wiki/Centripetal_Catmull–Rom_spline). Centripetal splines are recommended to avoid self-intersections and overshoot. For example:
 
 ```js
 var line = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
@@ -894,11 +894,11 @@ var link = d3.linkRadial()
 
 <a name="linkRadial_angle" href="#linkRadial_angle">#</a> <i>linkRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L80 "Source")
 
-Equivalent to [*link*.x](#link_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
+等价于 [*link*.x](#link_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
 
 <a name="linkRadial_radius" href="#linkRadial_radius">#</a> <i>linkRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L81 "Source")
 
-Equivalent to [*link*.y](#link_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
+等价于 [*link*.y](#link_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
 
 ### Symbols
 
@@ -990,7 +990,7 @@ Renders this symbol type to the specified *context* with the specified *size* in
 
 [<img alt="Stacked Bar Chart" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stacked-bar.png" width="295" height="154">](http://bl.ocks.org/mbostock/3886208)[<img alt="Streamgraph" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stacked-stream.png" width="295" height="154">](http://bl.ocks.org/mbostock/4060954)
 
-Some shape types can be stacked, placing one shape adjacent to another. For example, a bar chart of monthly sales might be broken down into a multi-series bar chart by product category, stacking bars vertically. This is equivalent to subdividing a bar chart by an ordinal dimension (such as product category) and applying a color encoding.
+Some shape types can be stacked, placing one shape adjacent to another. For example, a bar chart of monthly sales might be broken down into a multi-series bar chart by product category, stacking bars vertically. This is 等价于 subdividing a bar chart by an ordinal dimension (such as product category) and applying a color encoding.
 
 Stacked charts can show overall value and per-category value simultaneously; however, it is typically harder to compare across categories, as only the bottom layer of the stack is aligned. So, chose the [stack order](#stack_order) carefully, and consider a [streamgraph](#stackOffsetWiggle). (See also [grouped charts](http://bl.ocks.org/mbostock/3887051).)
 
