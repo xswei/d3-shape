@@ -403,7 +403,7 @@ function y(d) {
 
 <a name="line_defined" href="#line_defined">#</a> <i>line</i>.<b>defined</b>([<i>defined</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L42 "Source")
 
-If *defined* is specified, sets the defined accessor to the specified function or boolean and returns this line generator. If *defined* is not specified, returns the current defined accessor, which defaults to:
+如果指定了 *defined* 则将已定义的访问器设置为指定的函数或布尔值。如果没有指定 *defined* 则返回当前默认的已定义的访问器，默认为:
 
 ```js
 function defined() {
@@ -411,23 +411,25 @@ function defined() {
 }
 ```
 
-The default accessor thus assumes that the input data is always defined. When a line is [generated](#_line), the defined accessor will be invoked for each element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. If the given element is defined (*i.e.*, if the defined accessor returns a truthy value for this element), the [x](#line_x) and [y](#line_y) accessors will subsequently be evaluated and the point will be added to the current line segment. Otherwise, the element will be skipped, the current line segment will be ended, and a new line segment will be generated for the next defined point. As a result, the generated line may have several discrete segments. For example:
+默认的访问器假设输入数据总是被定义的。当线条被 [generated](#_line) 时，定义的访问器会为输入数据的每个元素定义，并传递当前数据元素 `d`, 索引 `i` 以及数组 `data` 作为三个元素。如果给定的元素有定义的(*i.e.* 已定义的访问器为当前元素返回真值), 则 [x](#line_x) 和 [y](#line_y) 访问器会对其进行评估并将当前点添加到线段中生成一个新的线段。否则会跳过当前数据元素，并结束当前线段，在下一个点重新开始一个新的线段。此时的结果会如下所示:
 
 [<img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/line-defined.png" width="480" height="250" alt="Line with Missing Data">](http://bl.ocks.org/mbostock/0533f44f2cfabecc5e3a)
 
-Note that if a line segment consists of only a single point, it may appear invisible unless rendered with rounded or square [line caps](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap). In addition, some curves such as [curveCardinalOpen](#curveCardinalOpen) only render a visible segment if it contains multiple points.
+注意，如果一个线段仅由一个点组成，那么它可能看起来是不可见的，除非用圆形或方形的 [line caps(线帽)](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap) 呈现。此外一些曲线比如 [curveCardinalOpen](#curveCardinalOpen) 如果包含多个点会被渲染成为一个可见的线段。
 
 <a name="line_curve" href="#line_curve">#</a> <i>line</i>.<b>curve</b>([<i>curve</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L46 "Source")
 
-If *curve* is specified, sets the [curve factory](#curves) and returns this line generator. If *curve* is not specified, returns the current curve factory, which defaults to [curveLinear](#curveLinear).
+如果指定了 *curve* 则表示设置当前的 [curve factory(曲线插值方法)](#curves) 并返回线条生成器。如果没有指定 *curve* 则返回当前的线条插值方式，默认为 [curveLinear](#curveLinear).
 
 <a name="line_context" href="#line_context">#</a> <i>line</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L50 "Source")
 
-If *context* is specified, sets the context and returns this line generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated line](#_line) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated line is returned.
+如果指定了 *context* 则设置上下文并返回当前线条生成器。如果没有指定 *context* 则返回当前的上下文，默认为 `null`。如果上下文不为空，则线条生成器会调用 [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) 被渲染到当前上下文中。否则会返回一个 [path data](http://www.w3.org/TR/SVG/paths.html#PathData) 字符串用来表示生成的线条。
 
 <a name="lineRadial" href="#lineRadial">#</a> d3.<b>lineRadial</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/lineRadial.js "Source")
 
 <img alt="Radial Line" width="250" height="250" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/line-radial.png">
+
+使用默认的设置构造一个新的 `radial line(径向线条)` 生成器。径向线条生成器类似于笛卡尔坐标系下的 [line generator](#line)，只不过 [x](#line_x) 和 [y](#line_y) 访问器被替换成了 [angle](#lineRadial_angle) 和 [radius](#lineRadial_radius) 访问器。径向线条的生成总是相对于 ⟨0,0⟩，但是你可以使用坐标变换调整其位置。参考 [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations) 的坐标变换。
 
 Constructs a new radial line generator with the default settings. A radial line generator is equivalent to the standard Cartesian [line generator](#line), except the [x](#line_x) and [y](#line_y) accessors are replaced with [angle](#lineRadial_angle) and [radius](#lineRadial_radius) accessors. Radial lines are always positioned relative to ⟨0,0⟩; use a transform (see: [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations)) to change the origin.
 
