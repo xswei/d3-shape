@@ -349,19 +349,21 @@ function padAngle() {
 
 [<img width="295" height="154" alt="Line Chart" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/line.png">](http://bl.ocks.org/mbostock/1550e57e12e73b86ad9e)
 
-The line generator produces a [spline](https://en.wikipedia.org/wiki/Spline_\(mathematics\)) or [polyline](https://en.wikipedia.org/wiki/Polygonal_chain), as in a line chart. Lines also appear in many other visualization types, such as the links in [hierarchical edge bundling](http://bl.ocks.org/mbostock/7607999).
+`line` 生成器可以用来生成线条图需要的 [spline](https://en.wikipedia.org/wiki/Spline_\(mathematics\)) 或 [polyline](https://en.wikipedia.org/wiki/Polygonal_chain)。线条也可以被用在其他的可视化类型中，比如 [hierarchical edge bundling](http://bl.ocks.org/mbostock/7607999)。
 
 <a name="line" href="#line">#</a> d3.<b>line</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js "Source")
+
+使用默认的设置构造一个 `line` 生成器。
 
 Constructs a new line generator with the default settings.
 
 <a name="_line" href="#_line">#</a> <i>line</i>(<i>data</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L14 "Source")
 
-Generates a line for the given array of *data*. Depending on this line generator’s associated [curve](#line_curve), the given input *data* may need to be sorted by *x*-value before being passed to the line generator. If the line generator has a [context](#line_context), then the line is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls and this function returns void. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string is returned.
+根据指定的 *data* 数组生成一个线条。根据与线条生成器的关联的 [curve](#line_curve)，输入数据 *data* 可能需要根据 *x* 值进行排序。如果线条生成器有 [context](#line_context)，则线条会通过 [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) 被渲染到指定的上下文中，否则返回一个 [path data](http://www.w3.org/TR/SVG/paths.html#PathData) 字符串。
 
 <a name="line_x" href="#line_x">#</a> <i>line</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L34 "Source")
 
-If *x* is specified, sets the x accessor to the specified function or number and returns this line generator. If *x* is not specified, returns the current x accessor, which defaults to:
+如果指定了 *x* 则将 `x` 访问器设置为指定的函数或数值并返回当前 `line` 生成器。如果没有指定 *x* 则返回当前 `x` 访问器，默认为:
 
 ```js
 function x(d) {
@@ -369,7 +371,7 @@ function x(d) {
 }
 ```
 
-When a line is [generated](#_line), the x accessor will be invoked for each [defined](#line_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default x accessor assumes that the input data are two-element arrays of numbers. If your data are in a different format, or if you wish to transform the data before rendering, then you should specify a custom accessor. For example, if `x` is a [time scale](https://github.com/xswei/d3-scale#time-scales) and `y` is a [linear scale](https://github.com/xswei/d3-scale#linear-scales):
+在线条被 [generated](#_line) 时，`x` 访问器将会为输入数据中每一个 [defined](#line_defined) 的元素进行调用，并传入当前元素 `d`, 当前索引 `i` 以及当前所有元素 `data` 三个参数。默认的 `x` 访问器假设输入的数据为一个数值类型的二维数组。如果你的数据是其他的格式或者你在渲染前想进一步处理，则应该指定一个自定义的访问器。比如，如果你的 `x` 为 [time scale](https://github.com/xswei/d3-scale#time-scales) 并且 `y` 为 [linear scale](https://github.com/xswei/d3-scale#linear-scales):
 
 ```js
 var data = [
@@ -389,7 +391,7 @@ var line = d3.line()
 
 <a name="line_y" href="#line_y">#</a> <i>line</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L38 "Source")
 
-If *y* is specified, sets the y accessor to the specified function or number and returns this line generator. If *y* is not specified, returns the current y accessor, which defaults to:
+如果指定了 *y* 则将 `y` 访问器设置为指定的函数或数值并返回当前 `line` 生成器。如果没有指定 *y* 则返回当前 `y` 访问器，默认为:
 
 ```js
 function y(d) {
@@ -397,7 +399,7 @@ function y(d) {
 }
 ```
 
-When a line is [generated](#_line), the y accessor will be invoked for each [defined](#line_defined) element in the input data array, being passed the element `d`, the index `i`, and the array `data` as three arguments. The default y accessor assumes that the input data are two-element arrays of numbers. See [*line*.x](#line_x) for more information.
+在线条被 [generated](#_line) 时，`x` 访问器将会为输入数据中每一个 [defined](#line_defined) 的元素进行调用，并传入当前元素 `d`, 当前索引 `i` 以及当前所有元素 `data` 三个参数。默认的 `x` 访问器假设输入的数据为一个数值类型的二维数组。参考 [*line*.x](#line_x) 获取更多信息。
 
 <a name="line_defined" href="#line_defined">#</a> <i>line</i>.<b>defined</b>([<i>defined</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/line.js#L42 "Source")
 
