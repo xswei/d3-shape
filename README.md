@@ -634,9 +634,9 @@ function defined() {
 
 ### Curves
 
-While [lines](#lines) are defined as a sequence of two-dimensional [*x*, *y*] points, and [areas](#areas) are similarly defined by a topline and a baseline, there remains the task of transforming this discrete representation into a continuous shape: *i.e.*, how to interpolate between the points. A variety of curves are provided for this purpose.
+[lines](#lines) 被定义为一系列二维点 [*x*, *y*]，[areas](#areas) 类似的可以由顶线和基线定义，但是还有一个任务就是把这些离散的点转换为连续的线条: 例如如何在这些点之间进行插值，插值的方式有很多种。
 
-Curves are typically not constructed or used directly, instead being passed to [*line*.curve](#line_curve) and [*area*.curve](#area_curve). For example:
+插值曲线通常不会直接使用，而是传递给 [*line*.curve](#line_curve) 和 [*area*.curve](#area_curve)。例如:
 
 ```js
 var line = d3.line()
@@ -649,29 +649,29 @@ var line = d3.line()
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/basis.png" width="888" height="240" alt="basis">
 
-Produces a cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points. The first and last points are triplicated such that the spline starts at the first point and ends at the last point, and is tangent to the line between the first and second points, and to the line between the penultimate and last points.
+使用指定的控制点生成一个三次 [basis spline(样条曲线)](https://en.wikipedia.org/wiki/B-spline)。第一个和最后一个点会被分成三个重复的点，这样就能保证线条经过第一个和最后一个点。并且曲线与第一个和第二个点之间的连线相切，同时与最后一个与倒数第二个点连线相切。
 
 <a name="curveBasisClosed" href="#curveBasisClosed">#</a> d3.<b>curveBasisClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/basisClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/basisClosed.png" width="888" height="240" alt="basisClosed">
 
-Produces a closed cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points. When a line segment ends, the first three control points are repeated, producing a closed loop with C2 continuity.
+使用指定的控制点生成一个闭合的三次 [basis spline](https://en.wikipedia.org/wiki/B-spline)。当一个线段结束时，前三个控制点被重复，产生一个连续性的闭环。
 
 <a name="curveBasisOpen" href="#curveBasisOpen">#</a> d3.<b>curveBasisOpen</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/basisOpen.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/basisOpen.png" width="888" height="240" alt="basisOpen">
 
-Produces a cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points. Unlike [basis](#basis), the first and last points are not repeated, and thus the curve typically does not intersect these points.
+使用指定的控制点生成一个三次 [basis spline](https://en.wikipedia.org/wiki/B-spline)。与 [basis](#basis) 不同，第一个和最后一个控制点不会被重复，这条曲线通常不会与这些点相交。
 
 <a name="curveBundle" href="#curveBundle">#</a> d3.<b>curveBundle</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/bundle.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/bundle.png" width="888" height="240" alt="bundle">
 
-Produces a straightened cubic [basis spline](https://en.wikipedia.org/wiki/B-spline) using the specified control points, with the spline straightened according to the curve’s [*beta*](#curveBundle_beta), which defaults to 0.85. This curve is typically used in [hierarchical edge bundling](http://bl.ocks.org/mbostock/7607999) to disambiguate connections, as proposed by [Danny Holten](https://www.win.tue.nl/vis1/home/dholten/) in [Hierarchical Edge Bundles: Visualization of Adjacency Relations in Hierarchical Data](https://www.win.tue.nl/vis1/home/dholten/papers/bundles_infovis.pdf). This curve does not implement [*curve*.areaStart](#curve_areaStart) and [*curve*.areaEnd](#curve_areaEnd); it is intended to work with [d3.line](#lines), not [d3.area](#areas).
+使用指定的控制点产生一个可以校正调整的三次 [basis spline](https://en.wikipedia.org/wiki/B-spline)，校正系数根据曲线的 [*beta*](#curveBundle_beta) 系数确定，默认为 `0.85`。这种曲线通常用在 [hierarchical edge bundling](http://bl.ocks.org/mbostock/7607999) 中来消除视觉混淆。这个算法是 [Danny Holten](https://www.win.tue.nl/vis1/home/dholten/) 在 [Hierarchical Edge Bundles: Visualization of Adjacency Relations in Hierarchical Data](https://www.win.tue.nl/vis1/home/dholten/papers/bundles_infovis.pdf) 中提出的。这种曲线生成方式不会实现 [*curve*.areaStart](#curve_areaStart) 和 [*curve*.areaEnd](#curve_areaEnd)，它的设计是用来和 [d3.line](#lines) 结合的，而不是 [d3.area](#areas)。
 
 <a name="curveBundle_beta" href="#curveBundle_beta">#</a> <i>bundle</i>.<b>beta</b>(<i>beta</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/bundle.js#L51 "Source")
 
-Returns a bundle curve with the specified *beta* in the range [0, 1], representing the bundle strength. If *beta* equals zero, a straight line between the first and last point is produced; if *beta* equals one, a standard [basis](#basis) spline is produced. For example:
+根据指定的 *beta* 设置曲线的校正系数，系数范围为 `[0, 1]` 用来表示绑定强度。如果 *beta* 为 `0` 则会在第一个和最后一个点之间生成一个直线，如果 *beta* 为 `1`，则会生成一个标准的 [basis](#basis)。例如:
 
 ```js
 var line = d3.line().curve(d3.curveBundle.beta(0.5));
