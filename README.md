@@ -707,23 +707,23 @@ var line = d3.line().curve(d3.curveCardinal.tension(0.5));
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/catmullRom.png" width="888" height="240" alt="catmullRom">
 
-Produces a cubic Catmull–Rom spline using the specified control points and the parameter [*alpha*](#catmullRom_alpha), which defaults to 0.5, as proposed by Yuksel et al. in [On the Parameterization of Catmull–Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/), with one-sided differences used for the first and last piece.
+使用指定的控制点和默认值为 `0.5` 的 [*alpha*](#catmullRom_alpha) 值生成一条 `Catmull–Rom` 曲线。曲线的详细介绍参考 [On the Parameterization of Catmull–Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/)。
 
 <a name="curveCatmullRomClosed" href="#curveCatmullRomClosed">#</a> d3.<b>curveCatmullRomClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRomClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/catmullRomClosed.png" width="888" height="330" alt="catmullRomClosed">
 
-Produces a closed cubic Catmull–Rom spline using the specified control points and the parameter [*alpha*](#catmullRom_alpha), which defaults to 0.5, as proposed by Yuksel et al. When a line segment ends, the first three control points are repeated, producing a closed loop.
+使用指定的控制点和默认值为 `0.5` 的 [*alpha*](#catmullRom_alpha) 值生成一条闭合的 `Catmull–Rom` 曲线。
 
 <a name="curveCatmullRomOpen" href="#curveCatmullRomOpen">#</a> d3.<b>curveCatmullRomOpen</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRomOpen.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/catmullRomOpen.png" width="888" height="240" alt="catmullRomOpen">
 
-Produces a cubic Catmull–Rom spline using the specified control points and the parameter [*alpha*](#catmullRom_alpha), which defaults to 0.5, as proposed by Yuksel et al. Unlike [curveCatmullRom](#curveCatmullRom), one-sided differences are not used for the first and last piece, and thus the curve starts at the second point and ends at the penultimate point.
+使用指定的控制点和默认值为 `0.5` 的 [*alpha*](#catmullRom_alpha) 值生成一条 `Catmull–Rom` 曲线。与 [curveCatmullRom](#curveCatmullRom) 不同的是所生成的曲线不经过第一个和最后一个控制点。
 
 <a name="curveCatmullRom_alpha" href="#curveCatmullRom_alpha">#</a> <i>catmullRom</i>.<b>alpha</b>(<i>alpha</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/catmullRom.js#L83 "Source")
 
-Returns a cubic Catmull–Rom curve with the specified *alpha* in the range [0, 1]. If *alpha* is zero, produces a uniform spline, 等价于 [curveCardinal](#curveCardinal) with a tension of zero; if *alpha* is one, produces a chordal spline; if *alpha* is 0.5, produces a [centripetal spline](https://en.wikipedia.org/wiki/Centripetal_Catmull–Rom_spline). Centripetal splines are recommended to avoid self-intersections and overshoot. For example:
+使用指定的 *alpha* 值(`[0, 1]`) 返回一条 `Catmull–Rom` 生成器。如果 *alpha* 为 `0` 则等价于 [curveCardinal](#curveCardinal)，如果 *alpha* 为 `1` 则会生成 `chordal` 曲线，如果 *alpha* 为 `0.5` 则会生成 [centripetal spline](https://en.wikipedia.org/wiki/Centripetal_Catmull–Rom_spline)。例如:
 
 ```js
 var line = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
@@ -733,49 +733,49 @@ var line = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/linear.png" width="888" height="240" alt="linear">
 
-Produces a polyline through the specified points.
+通过指定的点产生折线。
 
 <a name="curveLinearClosed" href="#curveLinearClosed">#</a> d3.<b>curveLinearClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/linearClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/linearClosed.png" width="888" height="240" alt="linearClosed">
 
-Produces a closed polyline through the specified points by repeating the first point when the line segment ends.
+产生闭合折线
 
 <a name="curveMonotoneX" href="#curveMonotoneX">#</a> d3.<b>curveMonotoneX</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/monotone.js#L98 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/monotoneX.png" width="888" height="240" alt="monotoneX">
 
-Produces a cubic spline that [preserves monotonicity](https://en.wikipedia.org/wiki/Monotone_cubic_interpolation) in *y*, assuming monotonicity in *x*, as proposed by Steffen in [A simple method for monotonic interpolation in one dimension](http://adsabs.harvard.edu/full/1990A%26A...239..443S): “a smooth curve with continuous first-order derivatives that passes through any given set of data points without spurious oscillations. Local extrema can occur only at grid points where they are given by the data, but not in between two adjacent grid points.”
+产生一条在 `y` 方向保持单调性的曲线，假设在 `x` 方向是单调的。曲线具体描述：[A simple method for monotonic interpolation in one dimension](http://adsabs.harvard.edu/full/1990A%26A...239..443S)。
 
 <a name="curveMonotoneY" href="#curveMonotoneY">#</a> d3.<b>curveMonotoneY</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/monotone.js#L102 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/monotoneY.png" width="888" height="240" alt="monotoneY">
 
-Produces a cubic spline that [preserves monotonicity](https://en.wikipedia.org/wiki/Monotone_cubic_interpolation) in *x*, assuming monotonicity in *y*, as proposed by Steffen in [A simple method for monotonic interpolation in one dimension](http://adsabs.harvard.edu/full/1990A%26A...239..443S): “a smooth curve with continuous first-order derivatives that passes through any given set of data points without spurious oscillations. Local extrema can occur only at grid points where they are given by the data, but not in between two adjacent grid points.”
+产生一条在 `x` 方向保持单调性的曲线，假设在 `y` 方向是单调的。曲线具体描述：[A simple method for monotonic interpolation in one dimension](http://adsabs.harvard.edu/full/1990A%26A...239..443S)。
 
 <a name="curveNatural" href="#curveNatural">#</a> d3.<b>curveNatural</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/natural.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/natural.png" width="888" height="240" alt="natural">
 
-Produces a [natural](https://en.wikipedia.org/wiki/Spline_interpolation) [cubic spline](http://mathworld.wolfram.com/CubicSpline.html) with the second derivative of the spline set to zero at the endpoints.
+产生一条 [自然的](https://en.wikipedia.org/wiki/Spline_interpolation) 的 [三次样条曲线](http://mathworld.wolfram.com/CubicSpline.html)，其二阶导数在端点设为零。
 
 <a name="curveStep" href="#curveStep">#</a> d3.<b>curveStep</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/step.png" width="888" height="240" alt="step">
 
-Produces a piecewise constant function (a [step function](https://en.wikipedia.org/wiki/Step_function)) consisting of alternating horizontal and vertical lines. The *y*-value changes at the midpoint of each pair of adjacent *x*-values.
+产生一个分段常数函数 ([阶梯函数](https://en.wikipedia.org/wiki/Step_function))，由水平和垂直的交替线组成。`y` 值在每一对相邻 `x` 值的中点处发生变化。
 
 <a name="curveStepAfter" href="#curveStepAfter">#</a> d3.<b>curveStepAfter</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L51 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stepAfter.png" width="888" height="240" alt="stepAfter">
 
-Produces a piecewise constant function (a [step function](https://en.wikipedia.org/wiki/Step_function)) consisting of alternating horizontal and vertical lines. The *y*-value changes after the *x*-value.
+产生一个分段常数函数 ([阶梯函数](https://en.wikipedia.org/wiki/Step_function))，由水平和垂直的交替线组成。`y` 值在 `x` 值之后发生变化。
 
 <a name="curveStepBefore" href="#curveStepBefore">#</a> d3.<b>curveStepBefore</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L47 "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stepBefore.png" width="888" height="240" alt="stepBefore">
 
-Produces a piecewise constant function (a [step function](https://en.wikipedia.org/wiki/Step_function)) consisting of alternating horizontal and vertical lines. The *y*-value changes before the *x*-value.
+产生一个分段常数函数 ([阶梯函数](https://en.wikipedia.org/wiki/Step_function))，由水平和垂直的交替线组成。`y` 值在 `x` 值之前发生变化。
 
 ### Custom Curves
 
