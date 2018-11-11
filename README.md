@@ -681,23 +681,23 @@ var line = d3.line().curve(d3.curveBundle.beta(0.5));
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cardinal.png" width="888" height="240" alt="cardinal">
 
-Produces a cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) using the specified control points, with one-sided differences used for the first and last piece. The default [tension](#curveCardinal_tension) is 0.
+使用指定的控制点生成一条三次 [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) 曲线，默认 [tension](#curveCardinal_tension) 为 `0`.
 
 <a name="curveCardinalClosed" href="#curveCardinalClosed">#</a> d3.<b>curveCardinalClosed</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalClosed.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cardinalClosed.png" width="888" height="240" alt="cardinalClosed">
 
-Produces a closed cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) using the specified control points. When a line segment ends, the first three control points are repeated, producing a closed loop. The default [tension](#curveCardinal_tension) is 0.
+使用指定的控制点生成一条闭合的三次 [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) 曲线。默认 [tension](#curveCardinal_tension) 为 `0`.
 
 <a name="curveCardinalOpen" href="#curveCardinalOpen">#</a> d3.<b>curveCardinalOpen</b>(<i>context</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalOpen.js "Source")
 
 <img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cardinalOpen.png" width="888" height="240" alt="cardinalOpen">
 
-Produces a cubic [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) using the specified control points. Unlike [curveCardinal](#curveCardinal), one-sided differences are not used for the first and last piece, and thus the curve starts at the second point and ends at the penultimate point. The default [tension](#curveCardinal_tension) is 0.
+使用指定的控制点生成一条三次 [cardinal spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline) 曲线，与 [curveCardinal](#curveCardinal) 不同，生成的曲线不利用第一个和最后一个点。默认 [tension](#curveCardinal_tension) 为 `0`.
 
 <a name="curveCardinal_tension" href="#curveCardinal_tension">#</a> <i>cardinal</i>.<b>tension</b>(<i>tension</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/cardinalOpen.js#L44 "Source")
 
-Returns a cardinal curve with the specified *tension* in the range [0, 1]. The *tension* determines the length of the tangents: a *tension* of one yields all zero tangents, 等价于 [curveLinear](#curveLinear); a *tension* of zero produces a uniform [Catmull–Rom](#curveCatmullRom) spline. For example:
+使用指定的处于 [0, 1] 的 *tension* 系数设置曲线的张力，张力确定了切线的长度：张力为 `1` 等价于 [curveLinear](#curveLinear)，张力为 `0` 等价于 [Catmull–Rom](#curveCatmullRom)。例如：
 
 ```js
 var line = d3.line().curve(d3.curveCardinal.tension(0.5));
