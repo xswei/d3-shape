@@ -779,37 +779,38 @@ var line = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
 
 ### Custom Curves
 
-Curves are typically not used directly, instead being passed to [*line*.curve](#line_curve) and [*area*.curve](#area_curve). However, you can define your own curve implementation should none of the built-in curves satisfy your needs using the following interface. You can also use this low-level interface with a built-in curve type as an alternative to the line and area generators.
+`Curves` 通常不会直接使用，而是传递给 [*line*.curve](#line_curve) 和 [*area*.curve](#area_curve). 但是，如果你对内置的曲线不满意的话可以使用如下接口定义自己的曲线实现来替代内置的曲线。你也可以使用这个带有内置曲线类型的低级接口作为线和面积生成器的替代选择。
 
 <a name="curve_areaStart" href="#curve_areaStart">#</a> <i>curve</i>.<b>areaStart</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L7 "Source")
 
-Indicates the start of a new area segment. Each area segment consists of exactly two [line segments](#curve_lineStart): the topline, followed by the baseline, with the baseline points in reverse order.
+指明新区域段的开始。每个区域段恰好由两个 [line segments](#curve_lineStart) 组成 : 顶线，基线点以相反的顺序排列的基线。
 
 <a name="curve_areaEnd" href="#curve_areaEnd">#</a> <i>curve</i>.<b>areaEnd</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L10 "Source")
 
-Indicates the end of the current area segment.
+指明当前区域段的结束。
 
 <a name="curve_lineStart" href="#curve_lineStart">#</a> <i>curve</i>.<b>lineStart</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L13 "Source")
 
-Indicates the start of a new line segment. Zero or more [points](#curve_point) will follow.
+指明新线段的开始。后面可以跟着零个或多个 [points](#curve_point)。
 
 <a name="curve_lineEnd" href="#curve_lineEnd">#</a> <i>curve</i>.<b>lineEnd</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L17 "Source")
 
-Indicates the end of the current line segment.
+指明当前线段的结束。
 
 <a name="curve_point" href="#curve_point">#</a> <i>curve</i>.<b>point</b>(<i>x</i>, <i>y</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/curve/step.js#L22 "Source")
 
-Indicates a new point in the current line segment with the given *x*- and *y*-values.
+指明当前线段中具有给定 `x` 和 `y` 值的新点。
 
 ### Links
 
 [<img alt="Tidy Tree" src="https://raw.githubusercontent.com/d3/d3-hierarchy/master/img/tree.png">](http://bl.ocks.org/mbostock/9d0899acb5d3b8d839d9d613a9e1fe04)
 
-The **link** shape generates a smooth cubic Bézier curve from a source point to a target point. The tangents of the curve at the start and end are either [vertical](#linkVertical), [horizontal](#linkHorizontal) or [radial](#linkRadial).
+`link` 用来生成从一个源点到目标点的光滑的三次贝塞尔曲线。曲线在起点和终点的切线要么是 [vertical](#linkVertical)，要么是 [horizontal](#linkHorizontal)，要么是 [radial](#linkRadial)的。
 
 <a name="linkVertical" href="#linkVertical">#</a> d3.<b>linkVertical</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L74 "Source")
 
-Returns a new [link generator](#_link) with vertical tangents. For example, to visualize [links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) rooted on the top edge of the display, you might say:
+返回一个新的 [link 生成器](#_link)，生成的曲线在曲线的终点和起点处的切线是垂直方向的。例如在 [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) 中对 
+[links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) 进行可视化时，可以定义为：
 
 ```js
 var link = d3.linkVertical()
@@ -819,7 +820,8 @@ var link = d3.linkVertical()
 
 <a name="linkHorizontal" href="#linkHorizontal">#</a> d3.<b>linkHorizontal</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L70 "Source")
 
-Returns a new [link generator](#_link) with horizontal tangents. For example, to visualize [links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) rooted on the left edge of the display, you might say:
+返回一个新的 [link 生成器](#_link)，生成的曲线在曲线的终点和起点处的切线是水平方向的。例如在 [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) 中对 
+[links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) 进行可视化时，可以定义为：
 
 ```js
 var link = d3.linkHorizontal()
@@ -829,7 +831,7 @@ var link = d3.linkHorizontal()
 
 <a href="#_link" name="_link">#</a> <i>link</i>(<i>arguments…</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L21 "Source")
 
-Generates a link for the given *arguments*. The *arguments* are arbitrary; they are simply propagated to the link generator’s accessor functions along with the `this` object. For example, with the default settings, an object expected:
+根据指定的 *arguments* 生成 `links`。*arguments* 是任意的。它们会被直接传递给 `link` 生成器的访问函数。例如，使用的默认设置时，期望的参数为:
 
 ```js
 link({
@@ -840,7 +842,7 @@ link({
 
 <a name="link_source" href="#link_source">#</a> <i>link</i>.<b>source</b>([<i>source</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L28 "Source")
 
-If *source* is specified, sets the source accessor to the specified function and returns this link generator. If *source* is not specified, returns the current source accessor, which defaults to:
+如果指定了 *source* 则将 `source` 访问器设置为指定的函数并返回当前 `link` 生成器。如果没有指定 *source* 则返回当前的 `source` 访问器，默认为:
 
 ```js
 function source(d) {
@@ -850,7 +852,7 @@ function source(d) {
 
 <a name="link_target" href="#link_target">#</a> <i>link</i>.<b>target</b>([<i>target</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L32 "Source")
 
-If *target* is specified, sets the target accessor to the specified function and returns this link generator. If *target* is not specified, returns the current target accessor, which defaults to:
+如果指定了 *target* 则将 `target` 访问器设置为指定的函数并返回当前 `link` 生成器。如果没有指定 *target* 则返回当前的 `target` 访问器，默认为:
 
 ```js
 function target(d) {
@@ -860,7 +862,7 @@ function target(d) {
 
 <a name="link_x" href="#link_x">#</a> <i>link</i>.<b>x</b>([<i>x</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L36 "Source")
 
-If *x* is specified, sets the *x*-accessor to the specified function or number and returns this link generator. If *x* is not specified, returns the current *x*-accessor, which defaults to:
+如果指定了 *x* 则将 *x* 访问器设置为指定的函数或数值，并返回当前 `link` 生成器。如果 *x* 没有指定则返回当前 *x* 访问器，默认为: 
 
 ```js
 function x(d) {
@@ -870,7 +872,7 @@ function x(d) {
 
 <a name="link_y" href="#link_y">#</a> <i>link</i>.<b>y</b>([<i>y</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L40 "Source")
 
-If *y* is specified, sets the *y*-accessor to the specified function or number and returns this link generator. If *y* is not specified, returns the current *y*-accessor, which defaults to:
+如果指定了 *y* 则将 *y* 访问器设置为指定的函数或数值，并返回当前 `link` 生成器。如果 *y* 没有指定则返回当前 *y* 访问器，默认为: 
 
 ```js
 function y(d) {
@@ -880,11 +882,12 @@ function y(d) {
 
 <a name="link_context" href="#link_context">#</a> <i>link</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L44 "Source")
 
-If *context* is specified, sets the context and returns this link generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated link](#_link) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated link is returned. See also [d3-path](https://github.com/xswei/d3-path).
+如果指定了 *context*，则设置上下文并返回当前 `link` 生成器。如果没有指定 *context* 则返回当前的上下文，默认为 `null`。如果上下文非空，则 [生成的 link](#_link) 会被渲染到指定的上下文中。否则会返回 [path data](http://www.w3.org/TR/SVG/paths.html#PathData)字符串。参考 [d3-path](https://github.com/xswei/d3-path).
 
 <a name="linkRadial" href="#linkRadial">#</a> d3.<b>linkRadial</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L78 "Source")
 
-Returns a new [link generator](#_link) with radial tangents. For example, to visualize [links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) in a [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) rooted in the center of the display, you might say:
+返回一个新的径向 [link 生成器](#_link)。例如在 [tree diagram](https://github.com/xswei/d3-hierarchy/blob/master/README.md#tree) 中对 
+[links](https://github.com/xswei/d3-hierarchy/blob/master/README.md#node_links) 进行可视化时，可以定义为：
 
 ```js
 var link = d3.linkRadial()
@@ -894,29 +897,29 @@ var link = d3.linkRadial()
 
 <a name="linkRadial_angle" href="#linkRadial_angle">#</a> <i>linkRadial</i>.<b>angle</b>([<i>angle</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L80 "Source")
 
-等价于 [*link*.x](#link_x), except the accessor returns the angle in radians, with 0 at -*y* (12 o’clock).
+等价于 [*link*.x](#link_x), 只不过访问器返回的是弧度值，其中 `0` 度为 `12` 点钟方向。
 
 <a name="linkRadial_radius" href="#linkRadial_radius">#</a> <i>linkRadial</i>.<b>radius</b>([<i>radius</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/link/index.js#L81 "Source")
 
-等价于 [*link*.y](#link_y), except the accessor returns the radius: the distance from the origin ⟨0,0⟩.
+等价于 [*link*.y](#link_y), 只不过访问器返回的是半径: 到 `⟨0,0⟩` 的距离。
 
 ### Symbols
 
 <a href="#symbolCircle"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/circle.png" width="100" height="100"></a><a href="#symbolCross"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/cross.png" width="100" height="100"></a><a href="#symbolDiamond"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/diamond.png" width="100" height="100"></a><a href="#symbolSquare"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/square.png" width="100" height="100"></a><a href="#symbolStar"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/star.png" width="100" height="100"></a><a href="#symbolTriangle"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/triangle.png" width="100" height="100"></a><a href="#symbolWye"><img src="https://raw.githubusercontent.com/d3/d3-shape/master/img/wye.png" width="100" height="100"></a>
 
-Symbols provide a categorical shape encoding as is commonly used in scatterplots. Symbols are always centered at ⟨0,0⟩; use a transform (see: [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations)) to move the symbol to a different position.
+符号提供了几种用来表示分类的形状。符号的坐标总是位于 `⟨0,0⟩`, 需要使用 `transform` 将其移动到指定的位置(参考: [SVG](http://www.w3.org/TR/SVG/coords.html#TransformAttribute), [Canvas](http://www.w3.org/TR/2dcontext/#transformations))。
 
 <a name="symbol" href="#symbol">#</a> d3.<b>symbol</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js "Source")
 
-Constructs a new symbol generator with the default settings.
+使用默认的设置构造一个新的符号生成器。
 
 <a name="_symbol" href="#_symbol">#</a> <i>symbol</i>(<i>arguments</i>…) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L11 "Source")
 
-Generates a symbol for the given *arguments*. The *arguments* are arbitrary; they are simply propagated to the symbol generator’s accessor functions along with the `this` object. For example, with the default settings, no arguments are needed to produce a circle with area 64 square pixels. If the symbol generator has a [context](#symbol_context), then the symbol is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls and this function returns void. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string is returned.
+使用指定的 *arguments* 生成一个符号。*arguments* 是任意的。它们会被直接传递给符号生成器的访问器。例如使用默认的设置，没有任何参数的情况下生成的是一个 `64` 平方像素的区域。如果符号生成器拥有 [context](#symbol_context) 则符号会被渲染到此上下文中。否则会返回一个 [path data](http://www.w3.org/TR/SVG/paths.html#PathData) 字符串。
 
 <a name="symbol_type" href="#symbol_type">#</a> <i>symbol</i>.<b>type</b>([<i>type</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L33 "Source")
 
-If *type* is specified, sets the symbol type to the specified function or symbol type and returns this line generator. If *type* is not specified, returns the current symbol type accessor, which defaults to:
+如果指定了 *type* 则将符号的类型设置为指定的函数或符号类型并返回符号生成器。如果没有指定 *type* 则返回当前的类型访问器，默认为：
 
 ```js
 function type() {
@@ -924,11 +927,11 @@ function type() {
 }
 ```
 
-See [symbols](#symbols) for the set of built-in symbol types. To implement a custom symbol type, pass an object that implements [*symbolType*.draw](#symbolType_draw).
+参考 [symbols](#symbols) 获取内置的符号类型。如果需要实现自己的符号类型，可以传递对象[*symbolType*.draw](#symbolType_draw)。
 
 <a name="symbol_size" href="#symbol_size">#</a> <i>symbol</i>.<b>size</b>([<i>size</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L37 "Source")
 
-If *size* is specified, sets the size to the specified function or number and returns this symbol generator. If *size* is not specified, returns the current size accessor, which defaults to:
+如果指定了 *size* 则将符号的尺寸设置为指定的函数或数值并返回符号生成器。如果没有指定 *size* 则返回当前的尺寸访问器，默认为:
 
 ```js
 function size() {
@@ -936,47 +939,47 @@ function size() {
 }
 ```
 
-Specifying the size as a function is useful for constructing a scatterplot with a size encoding. If you wish to scale the symbol to fit a given bounding box, rather than by area, try [SVG’s getBBox](http://bl.ocks.org/mbostock/3dd515e692504c92ab65).
+当使用大小对散点图进行编码时传递一个函数是非常有用的。如果你希望符号的大小适应给定的包裹矩形，而不是指定面积则可以使用 [SVG’s getBBox](http://bl.ocks.org/mbostock/3dd515e692504c92ab65).
 
 <a name="symbol_context" href="#symbol_context">#</a> <i>symbol</i>.<b>context</b>([<i>context</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol.js#L41 "Source")
 
-If *context* is specified, sets the context and returns this symbol generator. If *context* is not specified, returns the current context, which defaults to null. If the context is not null, then the [generated symbol](#_symbol) is rendered to this context as a sequence of [path method](http://www.w3.org/TR/2dcontext/#canvaspathmethods) calls. Otherwise, a [path data](http://www.w3.org/TR/SVG/paths.html#PathData) string representing the generated symbol is returned.
+如果指定了 *context* 则将上下文设置为指定的上下文并返回符号生成器。如果没有指定 *context* 则返回当前的上下文，默认为 `null`。如果上下文非空则 在生成符号会被渲染到指定的上下文中。否则会返回一个表示符号的 [path data](http://www.w3.org/TR/SVG/paths.html#PathData) 字符串。
 
 <a name="symbols" href="#symbols">#</a> d3.<b>symbols</b>
 
-An array containing the set of all built-in symbol types: [circle](#symbolCircle), [cross](#symbolCross), [diamond](#symbolDiamond), [square](#symbolSquare), [star](#symbolStar), [triangle](#symbolTriangle), and [wye](#symbolWye). Useful for constructing the range of an [ordinal scale](https://github.com/xswei/d3-scale#ordinal-scales) should you wish to use a shape encoding for categorical data.
+一组包含内置符号的数组：[circle](#symbolCircle), [cross](#symbolCross), [diamond](#symbolDiamond), [square](#symbolSquare), [star](#symbolStar), [triangle](#symbolTriangle), 和 [wye](#symbolWye). 如果您希望对分类数据使用形状编码，那么这对于构造 [ordinal scale](https://github.com/xswei/d3-scale#ordinal-scales) 比例尺的范围时非常有用。
 
 <a name="symbolCircle" href="#symbolCircle">#</a> d3.<b>symbolCircle</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/circle.js "Source")
 
-The circle symbol type.
+圆形
 
 <a name="symbolCross" href="#symbolCross">#</a> d3.<b>symbolCross</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/cross.js "Source")
 
-The Greek cross symbol type, with arms of equal length.
+希腊十字符号类型，臂长相等
 
 <a name="symbolDiamond" href="#symbolDiamond">#</a> d3.<b>symbolDiamond</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/diamond.js "Source")
 
-The rhombus symbol type.
+菱形
 
 <a name="symbolSquare" href="#symbolSquare">#</a> d3.<b>symbolSquare</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/square.js "Source")
 
-The square symbol type.
+正方形
 
 <a name="symbolStar" href="#symbolStar">#</a> d3.<b>symbolStar</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/star.js "Source")
 
-The pentagonal star (pentagram) symbol type.
+五角星
 
 <a name="symbolTriangle" href="#symbolTriangle">#</a> d3.<b>symbolTriangle</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/triangle.js "Source")
 
-The up-pointing triangle symbol type.
+向上的三角形
 
 <a name="symbolWye" href="#symbolWye">#</a> d3.<b>symbolWye</b> [<源码>](https://github.com/xswei/d3-shape/blob/master/src/symbol/wye.js "Source")
 
-The Y-shape symbol type.
+`Y` 形符号
 
 <a name="pointRadial" href="#pointRadial">#</a> d3.<b>pointRadial</b>(<i>angle</i>, <i>radius</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/pointRadial.js "Source")
 
-Returns the point [<i>x</i>, <i>y</i>] for the given *angle* in radians, with 0 at -*y* (12 o’clock) and positive angles proceeding clockwise, and the given *radius*.
+返回给定 *angle* (以弧度表示)以及 *radius* 的点的坐标 `[x, y]`，在 `12点` 处为 `0`, 正方向为顺时针，以及给定的半径。
 
 ### Custom Symbol Types
 
