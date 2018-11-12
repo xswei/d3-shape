@@ -983,21 +983,21 @@ function size() {
 
 ### Custom Symbol Types
 
-Symbol types are typically not used directly, instead being passed to [*symbol*.type](#symbol_type). However, you can define your own symbol type implementation should none of the built-in types satisfy your needs using the following interface. You can also use this low-level interface with a built-in symbol type as an alternative to the symbol generator.
+符号类型不能直接使用，而是需要传递给 [*symbol*.type](#symbol_type)。但是你可以使用低级接口来定义自己的符号来代替内置的符号类型。也可以使用这个低级接口作为符号生成器的替代。
 
 <a name="symbolType_draw" href="#symbolType_draw">#</a> <i>symbolType</i>.<b>draw</b>(<i>context</i>, <i>size</i>)
 
-Renders this symbol type to the specified *context* with the specified *size* in square pixels. The *context* implements the [CanvasPathMethods](http://www.w3.org/TR/2dcontext/#canvaspathmethods) interface. (Note that this is a subset of the CanvasRenderingContext2D interface!)
+将符号类型以指定的 *size* 渲染到指定的 *context*。*context* 实现了 [CanvasPathMethods](http://www.w3.org/TR/2dcontext/#canvaspathmethods) 接口。(注意，这是 `CanvasRenderingContext2D` 的一个子集)
 
 ### Stacks
 
 [<img alt="Stacked Bar Chart" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stacked-bar.png" width="295" height="154">](http://bl.ocks.org/mbostock/3886208)[<img alt="Streamgraph" src="https://raw.githubusercontent.com/d3/d3-shape/master/img/stacked-stream.png" width="295" height="154">](http://bl.ocks.org/mbostock/4060954)
 
-Some shape types can be stacked, placing one shape adjacent to another. For example, a bar chart of monthly sales might be broken down into a multi-series bar chart by product category, stacking bars vertically. This is 等价于 subdividing a bar chart by an ordinal dimension (such as product category) and applying a color encoding.
+有些形状类型可以堆叠，将一个形状与另一个邻近放置。例如，月销售条形图可以按照产品类别分为多个系列的条形图并垂直堆放。相当于将条形图按照类别(比如产品类型)细分并使用颜色进行编码。
 
-Stacked charts can show overall value and per-category value simultaneously; however, it is typically harder to compare across categories, as only the bottom layer of the stack is aligned. So, chose the [stack order](#stack_order) carefully, and consider a [streamgraph](#stackOffsetWiggle). (See also [grouped charts](http://bl.ocks.org/mbostock/3887051).)
+堆叠图可以同时显示整体值和每个类别的值; 但是对不同类别之间进行对比是比较困难的，因为只有底部是对齐的。所以需要选择合适的 [stack order(堆叠次序)](#stack_order) 并可以考虑使用 [streamgraph](#stackOffsetWiggle)。(参考 [grouped charts](http://bl.ocks.org/mbostock/3887051).)
 
-Like the [pie generator](#pies), the stack generator does not produce a shape directly. Instead it computes positions which you can then pass to an [area generator](#areas) or use directly, say to position bars.
+与 [pie generator](#pies) 类似，堆叠布局生成器不会直接产生形状。它是用来计算堆叠数据的，然后传给 [area generator](#areas) 或者直接使用(定位条形图)。
 
 <a name="stack" href="#stack">#</a> d3.<b>stack</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js "Source")
 
