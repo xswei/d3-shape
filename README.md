@@ -1001,15 +1001,17 @@ function size() {
 
 <a name="stack" href="#stack">#</a> d3.<b>stack</b>() [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js "Source")
 
-Constructs a new stack generator with the default settings.
+使用默认的设置构造一个新的堆叠布局生成器。
 
 <a name="_stack" href="#_stack">#</a> <i>stack</i>(<i>data</i>[, <i>arguments…</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L16 "Source")
 
+根据指定的数据数组 *data* 生成一个堆叠布局，返回形式为序列数组。可以传递任意 *arguments*，它们会被直接传递给访问器。
+
 Generates a stack for the given array of *data*, returning an array representing each series. Any additional *arguments* are arbitrary; they are simply propagated to accessors along with the `this` object.
 
-The series are determined by the [keys accessor](#stack_keys); each series *i* in the returned array corresponds to the *i*th key. Each series is an array of points, where each point *j* corresponds to the *j*th element in the input *data*. Lastly, each point is represented as an array [*y0*, *y1*] where *y0* is the lower value (baseline) and *y1* is the upper value (topline); the difference between *y0* and *y1* corresponds to the computed [value](#stack_value) for this point. The key for each series is available as *series*.key, and the [index](#stack_order) as *series*.index. The input data element for each point is available as *point*.data.
+返回的序列由 [keys accessor](#stack_keys) 决定。每个序列 *i* 对应第 *i* 个 `key`。每个序列都是一组点数组，每个点 *j* 表示输入数据中的第 *j* 个元素。最后每个点都会被表示为一个数组 `[*y0*, *y1*]`, 其中 *y0* 表示这个点的下限值(基线)，*y1* 表示这个点的上限值(顶线); *y0* 和 *y1* 之间的差值对应当前点的计算 [value](#stack_value)。每个系列的 `key` 与 *series*.key 对应, 并且 [index](#stack_order) 等于 *series*.index. 每个点的输入数据元素对应 *point*.data.
 
-For example, consider the following table representing monthly sales of fruits:
+例如，考虑如下的表示几种水果的月销售数据的表格:
 
 Month   | Apples | Bananas | Cherries | Dates
 --------|--------|---------|----------|-------
@@ -1018,7 +1020,7 @@ Month   | Apples | Bananas | Cherries | Dates
  3/2015 |    640 |     960 |      640 |   400
  4/2015 |    320 |     480 |      640 |   400
 
-This might be represented in JavaScript as an array of objects:
+在 `JavaScript` 中可以表示为对象：
 
 ```js
 var data = [
@@ -1029,7 +1031,7 @@ var data = [
 ];
 ```
 
-To produce a stack for this data:
+使用这个数据创建一个堆叠布局:
 
 ```js
 var stack = d3.stack()
@@ -1040,7 +1042,7 @@ var stack = d3.stack()
 var series = stack(data);
 ```
 
-The resulting array has one element per *series*. Each series has one point per month, and each point has a lower and upper value defining the baseline and topline:
+返回的结果是一个包含每个 *series* 的数组。每个系列在每个月都对应一个数据点，每个点都有下限值和上限值用来表示基线和顶线:
 
 ```js
 [
@@ -1051,15 +1053,15 @@ The resulting array has one element per *series*. Each series has one point per 
 ]
 ```
 
-Each series in then typically passed to an [area generator](#areas) to render an area chart, or used to construct rectangles for a bar chart.
+每个序列通常会被传递给 [area generator](#areas) 来渲染出区域图，或者直接用来绘制条形图。
 
 <a name="stack_keys" href="#stack_keys">#</a> <i>stack</i>.<b>keys</b>([<i>keys</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L40 "Source")
 
-If *keys* is specified, sets the keys accessor to the specified function or array and returns this stack generator. If *keys* is not specified, returns the current keys accessor, which defaults to the empty array. A series (layer) is [generated](#_stack) for each key. Keys are typically strings, but they may be arbitrary values. The series’ key is passed to the [value accessor](#stack_value), along with each data point, to compute the point’s value.
+如果指定了 *keys* 则将 `keys` 访问器设置为指定的函数或数组，并返回当前堆叠布局生成器。如果没有指定 *keys* 则返回当前的 `keys` 访问器，默认为空数组。一个序列(一层) 对应一个 `key`。`keys` 通常是字符串，但是也可以是任意值。系列的 `key` 会被直接传递给 [value accessor](#stack_value) 以计算每个数据点的值。
 
 <a name="stack_value" href="#stack_value">#</a> <i>stack</i>.<b>value</b>([<i>value</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L44 "Source")
 
-If *value* is specified, sets the value accessor to the specified function or number and returns this stack generator. If *value* is not specified, returns the current value accessor, which defaults to:
+如果指定了 *value* 则将值访问器设置为指定的函数或数值并返回当前堆叠布局生成器。如果没有指定则返回当前的值访问器，默认为:
 
 ```js
 function value(d, key) {
@@ -1067,13 +1069,13 @@ function value(d, key) {
 }
 ```
 
-Thus, by default the stack generator assumes that the input data is an array of objects, with each object exposing named properties with numeric values; see [*stack*](#_stack) for an example.
+因此，默认情况下堆叠布局生成器假设输入数据是一个对象数组，每个对象都包含了一个值为数值类型的属性。参考 [*stack*](#_stack)。
 
 <a name="stack_order" href="#stack_order">#</a> <i>stack</i>.<b>order</b>([<i>order</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L48 "Source")
 
-If *order* is specified, sets the order accessor to the specified function or array and returns this stack generator. If *order* is not specified, returns the current order acccesor, which defaults to [stackOrderNone](#stackOrderNone); this uses the order given by the [key accessor](#stack_key). See [stack orders](#stack-orders) for the built-in orders.
+如果指定了 *order* 则将顺序访问器设置为指定的函数或数组并返回当前堆叠布局生成器。如果没有指定 *order* 则返回当前顺序访问器默认为 [stackOrderNone](#stackOrderNone)；也就是使用 [key accessor](#stack_key) 指定的次序。参考 [stack orders](#stack-orders) 获取内置顺序。
 
-If *order* is a function, it is passed the generated series array and must return an array of numeric indexes representing the stack order. For example, the default order is defined as:
+如果 *order* 为函数则会传递生成的系列数组，并且必须返回数组。例如默认的顺序访问器被定义为:
 
 ```js
 function orderNone(series) {
@@ -1083,13 +1085,13 @@ function orderNone(series) {
 }
 ```
 
-The stack order is computed prior to the [offset](#stack_offset); thus, the lower value for all points is zero at the time the order is computed. The index attribute for each series is also not set until after the order is computed.
+堆叠次序是在计算 [offset](#stack_offset) 之前进行的，因此在计算次序时每个点的下限都为 `0`。每个序列的索引属性在计算完次序之后才会被设置。
 
 <a name="stack_offset" href="#stack_offset">#</a> <i>stack</i>.<b>offset</b>([<i>offset</i>]) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/stack.js#L52 "Source")
 
-If *offset* is specified, sets the offset accessor to the specified function or array and returns this stack generator. If *offset* is not specified, returns the current offset acccesor, which defaults to [stackOffsetNone](#stackOffsetNone); this uses a zero baseline. See [stack offsets](#stack-offsets) for the built-in offsets.
+如果指定了 *offset* 则将偏移访问器设置为指定的函数或数组并返回当前堆叠布局。如果 *offset* 没有指定则返回当前的偏移访问器，默认为 [stackOffsetNone](#stackOffsetNone); 默认会生成以 `0` 为基线的堆叠图，参考 [stack offsets](#stack-offsets) 了解内置的偏移。
 
-If *offset* is a function, it is passed the generated series array and the order index array. The offset function is then responsible for updating the lower and upper values in the series array to layout the stack. For example, the default offset is defined as:
+如果 *offset* 为函数，则会传递系列数组以及顺序索引。偏移函数负责计算更新每个数据点的上下限值。例如默认的偏移被定义为:
 
 ```js
 function offsetNone(series, order) {
@@ -1105,48 +1107,48 @@ function offsetNone(series, order) {
 
 ### Stack Orders
 
-Stack orders are typically not used directly, but are instead passed to [*stack*.order](#stack_order).
+堆叠次序通常不会直接使用，而是传递给 [*stack*.order](#stack_order).
 
 <a name="stackOrderAscending" href="#stackOrderAscending">#</a> d3.<b>stackOrderAscending</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/ascending.js "Source")
 
-Returns a series order such that the smallest series (according to the sum of values) is at the bottom.
+根据每个序列的值的和进行排序，总和最小的位于最底部。
 
 <a name="stackOrderDescending" href="#stackOrderDescending">#</a> d3.<b>stackOrderDescending</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/descending.js "Source")
 
-Returns a series order such that the largest series (according to the sum of values) is at the bottom.
+根据每个序列的值的和进行排序，总和最大的位于最底部。
 
 <a name="stackOrderInsideOut" href="#stackOrderInsideOut">#</a> d3.<b>stackOrderInsideOut</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/insideOut.js "Source")
 
-Returns a series order such that the larger series (according to the sum of values) are on the inside and the smaller series are on the outside. This order is recommended for streamgraphs in conjunction with the [wiggle offset](#stackOffsetWiggle). See [Stacked Graphs—Geometry & Aesthetics](http://leebyron.com/streamgraph/) by Byron & Wattenberg for more information.
+根据每个序列的值的和进行排序，值大的会被排列在内侧，值小的会被排列在外侧。建议将此排列方式与 [wiggle offset](#stackOffsetWiggle) 结合使用生成流图。参考 [Stacked Graphs—Geometry & Aesthetics](http://leebyron.com/streamgraph/) 获取更多信息。
 
 <a name="stackOrderNone" href="#stackOrderNone">#</a> d3.<b>stackOrderNone</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/none.js "Source")
 
-Returns the given series order [0, 1, … *n* - 1] where *n* is the number of elements in *series*. Thus, the stack order is given by the [key accessor](#stack_keys).
+返回给定的序列顺序 `[0,1，…n - 1]`，其中 `n` 是序列中的元素个数。因此与 [key accessor](#stack_keys) 的顺序一致。
 
 <a name="stackOrderReverse" href="#stackOrderReverse">#</a> d3.<b>stackOrderReverse</b>(<i>series</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/order/reverse.js "Source")
 
-Returns the reverse of the given series order [*n* - 1, *n* - 2, … 0] where *n* is the number of elements in *series*. Thus, the stack order is given by the reverse of the [key accessor](#stack_keys).
+返回给定系列顺序 `[n - 1, n - 2, … 0]`，其中 `n` 是序列中的元素个数。因此与 [key accessor](#stack_keys) 的顺序相反。
 
 ### Stack Offsets
 
-Stack offsets are typically not used directly, but are instead passed to [*stack*.offset](#stack_offset).
+堆叠偏移通常不会直接使用，而是传递给 [*stack*.offset](#stack_offset) 来使用。
 
 <a name="stackOffsetExpand" href="#stackOffsetExpand">#</a> d3.<b>stackOffsetExpand</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/expand.js "Source")
 
-Applies a zero baseline and normalizes the values for each point such that the topline is always one.
+应用零基线，对每个点的值进行规范化，使顶线始终为 `1`。
 
 <a name="stackOffsetDiverging" href="#stackOffsetDiverging">#</a> d3.<b>stackOffsetDiverging</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/diverging.js "Source")
 
-Positive values are stacked above zero, while negative values are [stacked below zero](https://bl.ocks.org/mbostock/b5935342c6d21928111928401e2c8608).
+正值堆叠在零以上，而负值 [stacked below zero(零下堆叠)](https://bl.ocks.org/mbostock/b5935342c6d21928111928401e2c8608)。
 
 <a name="stackOffsetNone" href="#stackOffsetNone">#</a> d3.<b>stackOffsetNone</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/none.js "Source")
 
-Applies a zero baseline.
+以 `0` 为基线。
 
 <a name="stackOffsetSilhouette" href="#stackOffsetSilhouette">#</a> d3.<b>stackOffsetSilhouette</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/silhouette.js "Source")
 
-Shifts the baseline down such that the center of the streamgraph is always at zero.
+将基线向下移动，保持流图的中心始终为零。
 
 <a name="stackOffsetWiggle" href="#stackOffsetWiggle">#</a> d3.<b>stackOffsetWiggle</b>(<i>series</i>, <i>order</i>) [<源码>](https://github.com/xswei/d3-shape/blob/master/src/offset/wiggle.js "Source")
 
-Shifts the baseline so as to minimize the weighted wiggle of layers. This offset is recommended for streamgraphs in conjunction with the [inside-out order](#stackOrderInsideOut). See [Stacked Graphs—Geometry & Aesthetics](http://leebyron.com/streamgraph/) by Bryon & Wattenberg for more information.
+调整基线，以最小化堆叠图的摆动。推荐使用这个偏移方式创建流图并结合顺序排列方式: [inside-out order](#stackOrderInsideOut) 使用。参考 [Stacked Graphs—Geometry & Aesthetics](http://leebyron.com/streamgraph/) 获取更多信息。
