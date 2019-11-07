@@ -2,7 +2,7 @@
 
 可视化通常由离散图形标记组成, 比如 [symbols](#symbols), [arcs](#arcs), [lines](#lines) 和 [areas](#areas)。虽然条形的矩形可以很容易的使用 [SVG](http://www.w3.org/TR/SVG/paths.html#PathData) 或者 [Canvas](http://www.w3.org/TR/2dcontext/#canvaspathmethods) 来生成, 但是其他的比如圆形的扇形以及向心 `Catmull-Rom` 样条曲线就很复杂。这个模块提供了许多图形生成器以便使用。
 
-与 `D3` 的其他特性一样，这些图形也是又数据驱动的: 每个图形生成器都暴露了一个如何将数据映射到可视化表现的访问器。例如你可以通过 [scaling](https://github.com/xswei/d3-scale) 定义一个时间序列的线条生成器以生成图表:
+与 `D3` 的其他特性一样，这些图形也是由数据驱动的: 每个图形生成器都暴露了一个如何将数据映射到可视化表现的访问器。例如你可以通过 [scaling](https://github.com/xswei/d3-scale) 定义一个时间序列的线条生成器以生成图表:
 
 ```js
 var line = d3.line()
